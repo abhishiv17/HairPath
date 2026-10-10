@@ -1,4 +1,4 @@
-// ManeRoute transition engine: plain, ordered rules. No scores, no percentages.
+// HairPath transition engine: plain, ordered rules. No scores, no percentages.
 // Every rule that fires records a stable id and a plain-language sentence, shown to the user.
 import type {
   Collection,
@@ -31,7 +31,7 @@ const PREVIEW_NOTE = "Previews are references, not guarantees.";
 
 const BASE_LIMITATIONS = [
   "Length comes from one photo and is a visible category, not a measurement.",
-  "ManeRoute does not predict how fast hair grows or give timelines.",
+  "HairPath does not predict how fast hair grows or give timelines.",
   "Generated previews are planning references, not guaranteed results.",
   "Density and scalp are not assessed.",
 ];

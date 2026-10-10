@@ -2,6 +2,9 @@
 
 Dated log of work, kept for the hackathon's "work completed during the submission period" requirement (window opens 29 Sep 2026, 12:00 pm ET).
 
+## 2026-10-11
+- **Renamed ManeRoute to HairPath**, and the mascot Rou to **Pip** (from "path"), across the UI, metadata, PWA manifest, card, downloads, calendar file and docs. Plans and journeys saved under the old IndexedDB names are copied into the new ones on first open and the old databases removed (`lib/client/idb.ts`); the remembered Men's/Women's list falls back to its old key. Entries below keep the names used at the time.
+
 ## 2026-10-02
 - **Beard, fringe and colour ("finish the look")** (brief from AbhiShiv: the barbershop promise had no beards). Three more YouCam APIs, applied on top of the haircut try-on so the user sees the whole look: **Beard Style Generator** (15 styles, from clean-shaven to Garibaldi; Men's and All lists), **Bangs** (10 fringes per list) and **Hair Color** (9 named colours). One of each at most; replacing one re-renders the stack from the cut. Every option has barber or salon wording (`lib/addons.ts`), shown in "What to ask for" on the route, the document, the PNG and the copied text. Template thumbnails are kept in `public/addons/`. Beards are a style, not a route: YouCam has no beard length detection, so there are no beard check-ins.
 - **Hair check:** the optional texture scan is now three photos (right, left, head lowered) on every route, adding **Hair Frizziness Detection** and **Hair Density Detection**. Results follow YouCam's documented grades (`lib/hairCheck.ts`) and drive new rules R7 (fine hair on layered cuts, thick hair on one-length cuts) and R8 (frizz on sleek looks), and routine steps RT16 (anti-frizz) and RT17 (volume for fine hair). 8 new tests (52 in total).

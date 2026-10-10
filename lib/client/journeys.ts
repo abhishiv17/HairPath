@@ -4,20 +4,14 @@ import { getStyle } from "@/lib/catalog";
 import { directionOf, type Journey, type Milestone } from "@/lib/journey";
 import type { GrowOutLength, LengthBand } from "@/lib/types";
 import type { CardData } from "./card";
+import { openDb } from "./idb";
 import { makeThumb } from "./plans";
 
-const DB = "maneroute-journeys";
+const DB = "hairpath-journeys";
+const LEGACY_DB = "maneroute-journeys";
 const STORE = "journeys";
 
-function open(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
-    if (typeof indexedDB === "undefined") return reject(new Error("no indexeddb"));
-    const req = indexedDB.open(DB, 1);
-    req.onupgradeneeded = () => req.result.createObjectStore(STORE, { keyPath: "id" });
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error);
-  });
-}
+const open = () => openDb(DB, STORE, LEGACY_DB);
 
 async function tx<T>(mode: IDBTransactionMode, fn: (s: IDBObjectStore) => IDBRequest<T>): Promise<T> {
   const db = await open();

@@ -1,7 +1,7 @@
-import ManeRoute from "@/components/ManeRoute";
+import HairPath from "@/components/HairPath";
 
-export const metadata = { title: "Consultation · ManeRoute" };
+export const metadata = { title: "Consultation · HairPath" };
 
 export default function ConsultPage() {
-  return <ManeRoute />;
+  return <HairPath />;
 }

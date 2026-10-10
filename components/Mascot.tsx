@@ -1,6 +1,6 @@
-// "Rou" (from "route"): ManeRoute's lion-cub road-tripper. A mane is literally the brand,
-// so Rou has the best hair on the road: a sunset mane with a swooped quiff that has the
-// route painted down it. Rou travels light: a road-trip bandana, a satchel with the
+// "Pip" (from "path"): HairPath's lion-cub road-tripper. A lion's mane is the best hair there is,
+// so Pip has the best hair on the road: a sunset mane with a swooped quiff that has the
+// route painted down it. Pip travels light: a road-trip bandana, a satchel with the
 // consultation card poking out, a comb in the mane, and a tail that ends in a map pin.
 // Pure SVG, themed with CSS variables, so it works in light and dark mode at any size.
 
@@ -9,7 +9,7 @@ export type MascotMood = "happy" | "think" | "wow" | "oops" | "cheer" | "wave" |
 const CX = 80;
 const CY = 62;
 
-/** A ring of swept, flame-like locks. `wind` makes the left side fuller, as if Rou is on the move. */
+/** A ring of swept, flame-like locks. `wind` makes the left side fuller, as if Pip is on the move. */
 function lockRing(rOut: number, rIn: number, n: number, sweep: number, wind: number, phase = 0) {
   const step = (Math.PI * 2) / n;
   const pt = (a: number, r: number) => {
@@ -57,7 +57,7 @@ function Arm({ from, to, className }: { from: [number, number]; to: [number, num
 export default function Mascot({
   mood = "happy",
   size = 96,
-  title = "Rou, the ManeRoute guide",
+  title = "Pip, the HairPath guide",
   animate = true,
 }: {
   mood?: MascotMood;
@@ -267,13 +267,13 @@ export default function Mascot({
   );
 }
 
-/** Rou as a wayfinding annotation (not a chatbot): a small marker, a label and a short note. */
+/** Pip as a wayfinding annotation (not a chatbot): a small marker, a label and a short note. */
 export function MascotSays({
   mood = "happy",
   children,
   size = 52,
   tone = "neutral",
-  label = "ROU",
+  label = "PIP",
   caps = false,
 }: {
   mood?: MascotMood;
@@ -284,11 +284,11 @@ export function MascotSays({
   caps?: boolean;
 }) {
   return (
-    <div className={`rou ${tone === "warn" || tone === "err" ? "warn" : ""}`}>
+    <div className={`pip ${tone === "warn" || tone === "err" ? "warn" : ""}`}>
       <Mascot mood={mood} size={size} />
-      <div className="rou-body">
-        <div className="rou-label">{label}</div>
-        <div className={`rou-text ${caps ? "caps" : ""}`}>{children}</div>
+      <div className="pip-body">
+        <div className="pip-label">{label}</div>
+        <div className={`pip-text ${caps ? "caps" : ""}`}>{children}</div>
       </div>
     </div>
   );

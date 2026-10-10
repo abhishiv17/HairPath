@@ -15,7 +15,7 @@ export default function SwRegister() {
       if (regs.length === 0) return;
       Promise.all([
         ...regs.map((r) => r.unregister()),
-        caches.keys().then((keys) => Promise.all(keys.filter((k) => k.startsWith("maneroute-")).map((k) => caches.delete(k)))),
+        caches.keys().then((keys) => Promise.all(keys.filter((k) => k.startsWith("hairpath-") || k.startsWith("maneroute-")).map((k) => caches.delete(k)))),
       ]).then(() => window.location.reload());
     });
   }, []);

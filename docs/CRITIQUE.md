@@ -1,6 +1,6 @@
 # Honest critique (28 Sep 2026)
 
-A code-and-product review of ManeRoute as it stands, judged against the four hackathon criteria: Technological Implementation, Design, Potential Impact, and Quality of the Idea. Most severe first.
+A code-and-product review of HairPath as it stands, judged against the four hackathon criteria: Technological Implementation, Design, Potential Impact, and Quality of the Idea. Most severe first.
 
 ## 1. Why men are shown women's hairstyles
 
@@ -10,7 +10,7 @@ A code-and-product review of ManeRoute as it stands, judged against the four hac
 | --- | --- | --- |
 | YouCam's template library is 85% "Female": 99 of 116 templates, against 17 "Male" | YouCam | `scripts/templates.json`, `category_name` counts |
 | Templates carry a whole look, not just a cut. Some add a fringe, earrings or a colour change. On a masculine face, a feminine template produces a feminine result | YouCam (by design) | An earlier planning-stage preview added earrings |
-| The picker opens on **All cuts**, sorted by how close each length is to yours, so for most people salon styles appear first | Mine | `components/ManeRoute.tsx:585` (`useState("all")`) |
+| The picker opens on **All cuts**, sorted by how close each length is to yours, so for most people salon styles appear first | Mine | `components/HairPath.tsx:585` (`useState("all")`) |
 | I generated the 38 new pictures with **salon cuts on a woman and barbershop cuts on a man**, so "Salon" visually reads as "women's". The text says we don't infer gender, but the pictures do | Mine | `scratchpad/thumbs.mjs` used one model per collection |
 | Barbershop has **no long styles, only 1 ear-length and 2 short**, so anyone in that collection who wants length gets pushed into salon looks | Mine (limited by YouCam's male templates) | Catalog counts: barbershop above_ears 12, ear 1, short 2, above_chest 2, long 0 |
 | The planning stage only *prefers* the user's collection and falls back to any collection, so a barbershop route can get a salon in-between preview | Mine | `lib/rules.ts:158–167` (`collection` is a sort key, not a filter) |
@@ -53,7 +53,7 @@ A code-and-product review of ManeRoute as it stands, judged against the four hac
 - 2.8 ✅ Error-mapping tests (19 unit tests in total), a real-browser e2e script in the repo, and a CI workflow.
 - 2.10 🟡 Accessibility improved (labelled controls, keyboard-usable slider, dialog roles, progressbar). A full axe/Lighthouse audit is still to do.
 - 2.1, 2.2, 2.4 ⏳ Still need AbhiShiv: repo, deploy, in-window work log, interviews.
-- New: **Rou the mascot**, **before-and-after slider**, **editable card** (pick and add questions, note to stylist), **My plans** (saved on device), **home page**, **404 page**.
+- New: **Pip the mascot**, **before-and-after slider**, **editable card** (pick and add questions, note to stylist), **My plans** (saved on device), **home page**, **404 page**.
 
 ## 3. What's genuinely strong (keep it)
 - Both required APIs work end to end, with real error mapping, retake guidance, and "keep waiting" that doesn't spend extra units.

@@ -280,12 +280,12 @@ export default function Plan({
           </section>
 
           {route.cautions.length > 0 && (
-            <div className="rou">
+            <div className="pip">
               <Mascot mood={MOOD[route.route]} size={56} />
-              <div className="rou-body">
-                <div className="rou-label">WORTH TALKING ABOUT</div>
+              <div className="pip-body">
+                <div className="pip-label">WORTH TALKING ABOUT</div>
                 {route.cautions.map((c) => (
-                  <p key={c.rule} className="rou-text" style={{ margin: "0 0 6px" }}>{c.text}</p>
+                  <p key={c.rule} className="pip-text" style={{ margin: "0 0 6px" }}>{c.text}</p>
                 ))}
               </div>
             </div>

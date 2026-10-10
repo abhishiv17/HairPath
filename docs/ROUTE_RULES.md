@@ -1,6 +1,6 @@
 # Route rules
 
-ManeRoute uses **fixed, ordered rules**, not an AI score. Every rule that fires is shown with its id and a plain sentence, and printed on the consultation card. Code: [`lib/rules.ts`](../lib/rules.ts). Tests: [`tests/rules.test.ts`](../tests/rules.test.ts).
+HairPath uses **fixed, ordered rules**, not an AI score. Every rule that fires is shown with its id and a plain sentence, and printed on the consultation card. Code: [`lib/rules.ts`](../lib/rules.ts). Tests: [`tests/rules.test.ts`](../tests/rules.test.ts).
 
 ## Inputs
 

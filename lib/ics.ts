@@ -28,12 +28,12 @@ function fold(line: string): string {
 }
 
 export function buildIcs(events: CalEvent[], now = new Date()): string {
-  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//ManeRoute//Journey//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH"];
+  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//HairPath//Journey//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH"];
   for (const e of events) {
     const next = new Date(e.date.getFullYear(), e.date.getMonth(), e.date.getDate() + 1);
     lines.push(
       "BEGIN:VEVENT",
-      `UID:${e.uid}@maneroute`,
+      `UID:${e.uid}@hairpath`,
       `DTSTAMP:${stamp(now)}`,
       `DTSTART;VALUE=DATE:${ymd(e.date)}`,
       `DTEND;VALUE=DATE:${ymd(next)}`,

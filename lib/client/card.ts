@@ -84,7 +84,7 @@ export function baselineText(b: HairBaseline): string {
 
 export function cardSummaryText(d: CardData): string {
   const lines = [
-    `MANEROUTE / CONSULTATION`,
+    `HAIRPATH / CONSULTATION`,
     `Target: ${d.target.name}`,
     `Route: ${ROUTE_HEADLINES[d.route.route]}`,
     `Current length (YouCam Hair Length Detection): ${baselineText(d.baseline)}`,
@@ -165,7 +165,7 @@ export async function renderCardPng(d: CardData): Promise<Blob> {
   // Header
   ctx.fillStyle = C.ink;
   setMono(22, 600);
-  spaced("ManeRoute / Consultation", PAD, y + 20, 3);
+  spaced("HairPath / Consultation", PAD, y + 20, 3);
   ctx.textAlign = "right";
   spaced(new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }), W - PAD, y + 20, 3);
   ctx.textAlign = "left";
@@ -323,7 +323,7 @@ export async function renderCardPng(d: CardData): Promise<Blob> {
   spaced(foot, PAD, y, 2);
   ctx.textAlign = "right";
   ctx.fillStyle = C.ink;
-  spaced("Rou", W - PAD - 26, y, 3);
+  spaced("Pip", W - PAD - 26, y, 3);
   ctx.textAlign = "left";
   ctx.beginPath();
   ctx.arc(W - PAD - 8, y - 6, 8, 0, Math.PI * 2);

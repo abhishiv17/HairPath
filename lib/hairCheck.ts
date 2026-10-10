@@ -2,7 +2,7 @@
 // Per YouCam's API spec (OpenAPI, read 2 Oct 2026):
 //   density → results.hair_density.term: Extremely Low / Low / Medium / High Density
 //   frizz   → results.hair_frizziness.term: Not Frizzy / Slightly Frizzy / Frizzy / Extreme Frizzy
-// ManeRoute keeps YouCam's own wording and maps those four grades to low / medium / high. Any
+// HairPath keeps YouCam's own wording and maps those four grades to low / medium / high. Any
 // other shape is read defensively and only acted on when its wording is clear; a bare number is
 // never turned into a direction.
 

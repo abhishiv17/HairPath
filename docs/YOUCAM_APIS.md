@@ -11,7 +11,7 @@ Everything below was checked against the live API on 28 Sep 2026 with a real key
 POST /s2s/v2.0/file
 { "files": [{ "content_type": "image/jpeg", "file_name": "capture.jpg", "file_size": 183422 }] }
 ```
-The response is `data.files[0].file_id` plus `data.files[0].requests[0]` = `{ url, method: "PUT", headers }`. ManeRoute then `PUT`s the bytes to that presigned URL with the given headers.
+The response is `data.files[0].file_id` plus `data.files[0].requests[0]` = `{ url, method: "PUT", headers }`. HairPath then `PUT`s the bytes to that presigned URL with the given headers.
 
 Code: `lib/youcam/client.ts → uploadImage()`.
 
@@ -27,7 +27,7 @@ GET  /s2s/v2.0/task/hair-length-detection/{task_id}
               "results": { "hair_length": { "term": "above chest or longer" } } } }
 ```
 
-| `term` returned by YouCam | ManeRoute band | `atLeast` |
+| `term` returned by YouCam | HairPath band | `atLeast` |
 | --- | --- | --- |
 | above the ears | `above_ears` | false |
 | ear length | `ear_length` | false |
@@ -59,7 +59,7 @@ GET /s2s/v2.1/task/hair-transfer/{task_id}
 - **Input:** JPG, long side ≤ 1024 px, face width ≥ 128 px, head roughly frontal, shoulders visible, one face.
 - **Cost:** 2 units per preview in v2.1 preset mode, so a route with a planning stage costs 4.
 - **Errors handled:** `error_no_shoulder`, `error_large_face_angle`, `error_insufficient_landmarks`, `error_hair_too_short`, `error_face_pose`, `error_no_face`, `error_nsfw_content_detected` and others (`lib/youcam/errors.ts`).
-- **Result:** the download URL is valid for 2 hours. ManeRoute downloads it on the server right away and returns it to the browser as a data URL.
+- **Result:** the download URL is valid for 2 hours. HairPath downloads it on the server right away and returns it to the browser as a data URL.
 
 Code: `app/api/vto/*`.
 
@@ -78,7 +78,7 @@ This returned 116 templates on 28 Sep 2026. Run `npm run templates` to list them
 
 YouCam doesn't publish a length for templates. Every band was checked by eye against the style picture in `public/styles`. 20 of those pictures are YouCam's own template thumbnails; the other 38 were generated with real YouCam Hairstyle VTO runs on YouCam sample model photos (28 Sep 2026, 80 units), so the picker works on any network.
 
-The collection is chosen by the user. ManeRoute never infers gender or any other trait from the photo, and style names never use gendered words.
+The collection is chosen by the user. HairPath never infers gender or any other trait from the photo, and style names never use gendered words.
 
 ## 5. AI Hair Type Detection v1.0 (texture scan)
 
@@ -88,7 +88,7 @@ GET  /s2s/v2.0/task/hair-type-detection/{task_id}
 → { "data": { "task_status": "success", "results": { "hair_type": { "mapping": "2a to 2b", "term": "Slight to Medium Wavy" } } } }
 ```
 
-- All three photos must be **the same size**. ManeRoute crops every capture to 640 × 800 on the device.
+- All three photos must be **the same size**. HairPath crops every capture to 640 × 800 on the device.
 - Side photos must be turned more than 15°. Sending the front photo three times returns `error_face_angle_invalid` (checked 28 Sep 2026), so the app runs a guided, hands-free 3-second shot for each side.
 - The nine documented ranges map to straight / wavy / curly / coily (`lib/texture.ts`). Unknown values count as "not scanned".
 - Cost: 2 units. Failure is non-blocking: the user can continue without texture or retake the side photos.
@@ -103,7 +103,7 @@ GET  /s2s/v2.0/task/hair-ext/{task_id}     → results.url
 ```
 
 - The template keeps the user's own cut and colour and adds length. Checked visually on 28 Sep 2026: `all_length_1` reaches chest length, and `all_length_2_` and `all_length_3` fall well below the chest.
-- ManeRoute maps a medium target to `all_length_1` and a long target to `all_length_2_`. Cost: 1 unit.
+- HairPath maps a medium target to `all_length_1` and a long target to `all_length_2_`. Cost: 1 unit.
 
 ## 7. AI Beard Style Generator ("finish the look")
 
@@ -134,7 +134,7 @@ GET  /s2s/v2.0/task/hair-color/{task_id}  → results.url  (returned as PNG)
 ```
 
 - `pattern.name` is `full` or `ombre` (ombre takes two palettes plus `blend_strength`, `line_offset`, `coloring_section`); palettes accept `color_intensity` and `shine_intensity` (0–100). There are no templates (`GET …/template/hair-color` is empty). Cost: 1 unit.
-- ManeRoute offers nine named colours with salon wording (`COLOURS` in `lib/addons.ts`). Results (colour comes back as PNG) are typed from the file's first bytes in `fetchResultImage`, so a missing or generic content type can't break re-using the image for the next finish.
+- HairPath offers nine named colours with salon wording (`COLOURS` in `lib/addons.ts`). Results (colour comes back as PNG) are typed from the file's first bytes in `fetchResultImage`, so a missing or generic content type can't break re-using the image for the next finish.
 
 ## 10. AI Hair Frizziness Detection (part of the hair check)
 
@@ -144,7 +144,7 @@ GET  /s2s/v2.0/task/hair-frizziness-detection/{task_id}
 → results.hair_frizziness = { "term": "Not Frizzy" | "Slightly Frizzy" | "Frizzy" | "Extreme Frizzy", "mapping": 0–3 }
 ```
 
-- Uses the same three photos as the texture scan (front, left, right). ManeRoute maps the terms to low / medium / high / high (`lib/hairCheck.ts`). "High" adds rule R8 on sleek straight looks and routine step RT16.
+- Uses the same three photos as the texture scan (front, left, right). HairPath maps the terms to low / medium / high / high (`lib/hairCheck.ts`). "High" adds rule R8 on sleek straight looks and routine step RT16.
 
 ## 11. AI Hair Density Detection (part of the hair check)
 
@@ -182,4 +182,4 @@ The two run in parallel on the same uploaded file. If the re-render fails, the m
 
 ## Data retention (YouCam side)
 
-Uploaded files and task ids are kept for **30 days**, and result download links last **2 hours**. ManeRoute tells the user this on the consent screen.
+Uploaded files and task ids are kept for **30 days**, and result download links last **2 hours**. HairPath tells the user this on the consent screen.

@@ -1,7 +1,7 @@
 import type { GrowOutLength, HairBaseline, HairTexture, TaskPoll } from "@/lib/types";
 import type { HairReading } from "@/lib/hairCheck";
 
-// Browser-side calls to ManeRoute's own server routes. The YouCam key never reaches the client.
+// Browser-side calls to HairPath's own server routes. The YouCam key never reaches the client.
 
 export type ApiFailure = { code: string; message: string; retake: boolean };
 

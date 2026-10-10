@@ -33,9 +33,9 @@ export default function Plans() {
     refresh();
   };
   const share = async (p: SavedPlan) => {
-    const file = new File([p.card], `maneroute-${p.targetName.toLowerCase().replace(/\W+/g, "-")}.png`, { type: "image/png" });
+    const file = new File([p.card], `hairpath-${p.targetName.toLowerCase().replace(/\W+/g, "-")}.png`, { type: "image/png" });
     try {
-      if (navigator.canShare?.({ files: [file] })) return void (await navigator.share({ files: [file], title: `ManeRoute: ${p.targetName}` }));
+      if (navigator.canShare?.({ files: [file] })) return void (await navigator.share({ files: [file], title: `HairPath: ${p.targetName}` }));
     } catch (e) {
       if ((e as Error).name === "AbortError") return;
     }
@@ -71,11 +71,11 @@ export default function Plans() {
           <section style={{ paddingTop: 12 }}>
             <div className="display h3">No routes yet.</div>
             <p className="lead" style={{ margin: "10px 0 20px" }}>Your next hairstyle starts here.</p>
-            <div className="rou">
+            <div className="pip">
               <Mascot mood="wave" size={56} />
-              <div className="rou-body">
-                <div className="rou-label">ROU</div>
-                <div className="rou-text">Finish a consultation and choose “Save to My plans” on the document.</div>
+              <div className="pip-body">
+                <div className="pip-label">PIP</div>
+                <div className="pip-text">Finish a consultation and choose “Save to My plans” on the document.</div>
               </div>
             </div>
             <Link href="/consult" className="cta block">Start consultation</Link>

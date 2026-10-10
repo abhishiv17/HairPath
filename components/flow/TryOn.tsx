@@ -74,7 +74,7 @@ export default function TryOn({
     if (!image) return;
     const a = document.createElement("a");
     a.href = shown ?? image;
-    a.download = `maneroute-${style.id}.jpg`;
+    a.download = `hairpath-${style.id}.jpg`;
     a.click();
   };
   const show = (id: string) => {

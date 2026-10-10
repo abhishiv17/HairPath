@@ -1,6 +1,6 @@
 # Research: the consultation problem
 
-This file collects the evidence behind ManeRoute, the competitive landscape, and the assumptions that still need testing with real people.
+This file collects the evidence behind HairPath, the competitive landscape, and the assumptions that still need testing with real people.
 
 ## 1. Evidence that the problem is real
 
@@ -9,20 +9,20 @@ This file collects the evidence behind ManeRoute, the competitive landscape, and
 | In the past year, **45%** of UK clients were disappointed with an appointment outcome and **33%** felt the stylist didn't listen (2,000 female-identifying adults and 100 stylists, March 2023) | [Ripe Insurance salon survey](https://www.ripeinsurance.co.uk/small-business/hair-and-beauty-insurance/blog/salon-etiquette-the-uks-awkward-hair-salon-misunderstandings/) |
 | After a poor experience, **28%** of clients didn't return and only **8%** left a review, so most dissatisfaction is silent | Same survey |
 | **68%** of women report being unhappy with their hair | [American Salon / HairRx study](https://www.americansalon.com/hair/study-shows-shocking-percentage-women-are-unhappy-their-hair) |
-| Consultation guides tell clients to bring photos, but also to say what they *don't* want, how much upkeep they can manage and how their texture behaves. These are the fields ManeRoute captures | [TheRightHairstyles consultation guide](https://therighthairstyles.com/how-to-show-stylist-what-you-want/) |
+| Consultation guides tell clients to bring photos, but also to say what they *don't* want, how much upkeep they can manage and how their texture behaves. These are the fields HairPath captures | [TheRightHairstyles consultation guide](https://therighthairstyles.com/how-to-show-stylist-what-you-want/) |
 | Academic work models hairdressing dissatisfaction as leading to complaints and lower revisit intention | [Fashion and Textiles (Springer), 2019](https://link.springer.com/article/10.1186/s40691-019-0191-3) |
 
 **Insight:** the failure usually isn't the stylist's skill. It's the **gap between the inspiration and what the client can put into words**, plus unstated limits such as not wanting to grow it out, avoiding chemicals, or needing low upkeep.
 
 ## 2. Competitive landscape
 
-| Product type | Examples | What they do | Gap ManeRoute fills |
+| Product type | Examples | What they do | Gap HairPath fills |
 | --- | --- | --- | --- |
 | AI hairstyle try-on | [YouCam AI Hairstyle Generator](https://yce.perfectcorp.com/ai-hairstyle-generator), [HairTry](https://hair-try.com/), [HairHunt](https://therighthairstyles.com/hairhunt-app/) | Show the destination on your face | No starting-point analysis, no route, no structured handoff |
 | Salon analysis tools | [TheHair.App](https://thehair.app/) | Help stylists analyse hair in the salon | Used by stylists, and only once the client is already in the chair |
 | Inspiration boards | Pinterest, Instagram saves | Collect photos | Photos of other people's hair, with no baseline and no limits |
 
-Round-ups of 2026 try-on apps ([1](https://therighthairstyles.com/free-hairstyle-try-on-tools-and-apps/), [2](https://www.hairlookapp.com/post/best-hairstyle-apps-virtual-try-on-2026)) all compete on how realistic the destination looks. None of them measures the client's **current length** or produces a consultation artefact. That combination is ManeRoute's angle.
+Round-ups of 2026 try-on apps ([1](https://therighthairstyles.com/free-hairstyle-try-on-tools-and-apps/), [2](https://www.hairlookapp.com/post/best-hairstyle-apps-virtual-try-on-2026)) all compete on how realistic the destination looks. None of them measures the client's **current length** or produces a consultation artefact. That combination is HairPath's angle.
 
 ## 3. Design principles drawn from the research
 

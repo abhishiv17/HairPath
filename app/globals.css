@@ -1,4 +1,4 @@
-/* ManeRoute: THE PAINTED ROAD
+/* HairPath: THE PAINTED ROAD
    A picture-book poster. Teal sky, sunset hills, a road to the horizon.
    Hand-cut display lettering for headlines, a warm humanist sans for reading,
    one sunset-orange signal for the route and the main action. */
@@ -40,7 +40,7 @@
   --r-sm: 12px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* Rou */
+  /* Pip */
   --mascot-mane-deep: #d2601a;
   --mascot-mane: #f08a24;
   --mascot-mane-2: #f7b04e;
@@ -211,13 +211,13 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
 .kicker { font-size: 13px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .screen-title { margin: 8px 0 20px; }
 
-/* ---------- Rou ---------- */
+/* ---------- Pip ---------- */
 .mascot { flex: none; overflow: visible; }
 .mascot.bob { animation: bob 3.6s ease-in-out infinite; transform-origin: 50% 95%; }
 @keyframes bob { 0%, 100% { transform: translateY(0) scaleY(1); } 50% { transform: translateY(-2px) scaleY(1.01); } }
 .mascot g { transform-box: fill-box; }
-/* Rou is alive everywhere: blinks, twitches an ear, the bandana flutters, the map-pin tail sways,
-   and Rou hops when you point at it. */
+/* Pip is alive everywhere: blinks, twitches an ear, the bandana flutters, the map-pin tail sways,
+   and Pip hops when you point at it. */
 .mascot .m-eyes { transform-origin: center; animation: blink 4.8s infinite; }
 @keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.1); } }
 .mascot .m-ear { transform-origin: 50% 100%; animation: ear 7s ease-in-out infinite; }
@@ -241,13 +241,13 @@ h1, h2, h3, h4 { margin: 0; font-weight: 400; }
 .mascot.m-walk .m-arm-l { transform-origin: 50% 0%; animation: swing 0.5s ease-in-out infinite; }
 .mascot.m-walk .m-arm-r { transform-origin: 50% 0%; animation: swing 0.5s ease-in-out infinite reverse; }
 @keyframes swing { 0%, 100% { transform: rotate(14deg); } 50% { transform: rotate(-14deg); } }
-.mascot:hover { animation: rou-hop 0.6s var(--ease); }
-.rou { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: var(--r); background: var(--paper); margin: 14px 0; }
-.rou-body { flex: 1; min-width: 0; }
-.rou-label { font-size: 12.5px; font-weight: 800; letter-spacing: 0.12em; color: var(--route-ink); margin-bottom: 3px; }
-.rou.warn .rou-label { color: var(--err); }
-.rou-text { font-size: 16px; line-height: 1.4; }
-.rou-text.caps { font-family: var(--display); font-size: 21px; line-height: 1.05; }
+.mascot:hover { animation: pip-hop 0.6s var(--ease); }
+.pip { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: var(--r); background: var(--paper); margin: 14px 0; }
+.pip-body { flex: 1; min-width: 0; }
+.pip-label { font-size: 12.5px; font-weight: 800; letter-spacing: 0.12em; color: var(--route-ink); margin-bottom: 3px; }
+.pip.warn .pip-label { color: var(--err); }
+.pip-text { font-size: 16px; line-height: 1.4; }
+.pip-text.caps { font-family: var(--display); font-size: 21px; line-height: 1.05; }
 
 /* ---------- Waypoints / vertical route ---------- */
 .route-v { list-style: none; padding: 0; margin: 0; position: relative; }
@@ -459,8 +459,8 @@ details > summary::-webkit-details-marker { display: none; }
 .hero-title em { font-style: normal; color: var(--gold); }
 .hero-lead { font-size: clamp(17px, 2vw, 20px); max-width: 44ch; margin: 0 0 24px; text-shadow: 0 1px 14px rgba(15, 42, 39, 0.6); }
 .hero-note { font-size: 14px; font-weight: 700; margin: 12px 0 0; text-shadow: 0 1px 10px rgba(15, 42, 39, 0.7); }
-.hero-rou { position: absolute; z-index: 2; left: 50%; bottom: 2%; transform: translateX(-50%); }
-.hero-rou .mascot { width: clamp(96px, 11vw, 136px); height: auto; filter: drop-shadow(0 6px 10px rgba(15, 42, 39, 0.35)); }
+.hero-pip { position: absolute; z-index: 2; left: 50%; bottom: 2%; transform: translateX(-50%); }
+.hero-pip .mascot { width: clamp(96px, 11vw, 136px); height: auto; filter: drop-shadow(0 6px 10px rgba(15, 42, 39, 0.35)); }
 
 /* chapter rail */
 .rail { position: fixed; right: 18px; top: 50%; transform: translateY(-50%); z-index: 30; display: none; flex-direction: column; gap: 14px; }
@@ -496,10 +496,10 @@ details > summary::-webkit-details-marker { display: none; }
 .road-track i { display: block; width: 100%; border-top: 4px dashed var(--gold); }
 .road-walker { display: none; position: absolute; left: 0; bottom: 2px; transition: none; }
 .road-walker.go { left: calc(100% - 56px); transition: left 2.6s cubic-bezier(0.45, 0, 0.55, 1); }
-.road-walker.go .mascot { animation: rou-step 0.5s ease-in-out infinite; }
-.road-walker.arrived .mascot { animation: rou-hop 0.7s var(--ease); }
-@keyframes rou-step { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-3px) rotate(2deg); } }
-@keyframes rou-hop { 0% { transform: translateY(0); } 40% { transform: translateY(-16px) scale(1.08); } 100% { transform: translateY(0); } }
+.road-walker.go .mascot { animation: pip-step 0.5s ease-in-out infinite; }
+.road-walker.arrived .mascot { animation: pip-hop 0.7s var(--ease); }
+@keyframes pip-step { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-3px) rotate(2deg); } }
+@keyframes pip-hop { 0% { transform: translateY(0); } 40% { transform: translateY(-16px) scale(1.08); } 100% { transform: translateY(0); } }
 .road-label { display: none; font-weight: 800; font-size: 14px; color: var(--gold); text-align: center; animation: label-in 0.5s var(--ease); }
 @keyframes label-in { from { opacity: 0; transform: translateY(6px); } }
 .states-foot { display: flex; align-items: center; gap: 14px; margin-top: 22px; flex-wrap: wrap; }
@@ -633,7 +633,7 @@ details > summary::-webkit-details-marker { display: none; }
 .jr-node { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--bg); border: 4px solid var(--route); font-size: 13px; font-weight: 900; color: #1e2420; }
 .jr-stop.done .jr-node { background: var(--route); }
 .jr-stop.ahead .jr-node { border-color: var(--line); }
-.jr-rou { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -64%); z-index: 2; }
+.jr-pip { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -64%); z-index: 2; }
 .jr-card { display: flex; gap: 12px; align-items: center; background: var(--paper); border-radius: var(--r); padding: 12px; min-width: 0; }
 .jr-stop.ahead .jr-thumb { opacity: 0.6; }
 .jr-stop.ahead .jr-card { background: color-mix(in srgb, var(--paper) 70%, transparent); }
@@ -712,7 +712,7 @@ details > summary::-webkit-details-marker { display: none; }
 
 /* chapter: walk the road */
 .walk-grid { display: grid; gap: 20px; align-items: center; }
-.walk-rou { display: flex; justify-content: center; }
+.walk-pip { display: flex; justify-content: center; }
 @media (min-width: 900px) { .walk-grid { grid-template-columns: 220px 1fr; } }
 @media (min-width: 640px) { .walk-grid .fact-cards { grid-template-columns: 1fr 1fr; } }
 
@@ -830,7 +830,7 @@ button.road-img:hover img { transform: scale(1.04); }
 .road-stop.pending .road-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%); background-size: 220% 100%; animation: shimmer 1.4s linear infinite; }
 .road-status { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; }
 .road-stop.failed .road-status { background: var(--paper); border-radius: 999px; margin: 0 10px; }
-.road-rou { position: absolute; left: -6px; bottom: -40px; z-index: 3; filter: drop-shadow(0 4px 6px rgba(15, 42, 39, 0.3)); }
+.road-pip { position: absolute; left: -6px; bottom: -40px; z-index: 3; filter: drop-shadow(0 4px 6px rgba(15, 42, 39, 0.3)); }
 .road-lane { position: relative; display: grid; place-items: center; margin: 0 -10px; }
 .road-lane::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 24px; margin-top: -12px; background: #34312d; }
 .road-lane::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 3px dashed var(--gold); margin-top: -1.5px; }

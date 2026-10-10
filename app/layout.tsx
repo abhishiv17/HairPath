@@ -9,10 +9,10 @@ const display = Luckiest_Guy({ subsets: ["latin"], weight: "400", variable: "--f
 const body = Alegreya_Sans({ subsets: ["latin"], weight: ["400", "500", "700", "800"], variable: "--font-body", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "ManeRoute",
+  title: "HairPath",
   description: "From the hair you have to the hair you want. Try cuts on your own photo, see the route, and take a consultation document to your barber or stylist.",
-  applicationName: "ManeRoute",
-  appleWebApp: { capable: true, title: "ManeRoute", statusBarStyle: "default" },
+  applicationName: "HairPath",
+  appleWebApp: { capable: true, title: "HairPath", statusBarStyle: "default" },
   icons: { icon: "/icon-192.png", apple: "/apple-touch-icon.png" },
   robots: { index: false },
 };

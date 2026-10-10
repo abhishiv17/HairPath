@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "ManeRoute",
-    short_name: "ManeRoute",
+    name: "HairPath",
+    short_name: "HairPath",
     description: "From the hair you have to the hair you want.",
     start_url: "/",
     display: "standalone",

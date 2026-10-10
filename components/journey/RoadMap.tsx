@@ -5,7 +5,7 @@ import { zoom } from "@/components/flow/shared";
 import { BAND_SHORT, progress, type Journey, type Milestone } from "@/lib/journey";
 import { LENGTH_BANDS } from "@/lib/types";
 
-// The road: every milestone of the route, with its YouCam preview, and Rou standing where you are.
+// The road: every milestone of the route, with its YouCam preview, and Pip standing where you are.
 // Milestones are reached by a new measurement in the right band or by logging the cut.
 const KIND: Record<Milestone["kind"], string> = {
   start: "Start",
@@ -44,8 +44,8 @@ export default function RoadMap({ journey, onLog }: { journey: Journey; onLog: (
             <div className="jr-lane" aria-hidden>
               <span className="jr-node">{state === "done" && !here ? "✓" : ""}</span>
               {here && (
-                <span className="jr-rou">
-                  <Mascot mood={p.arrived ? "cheer" : "walk"} size={58} title="Rou: you are here" />
+                <span className="jr-pip">
+                  <Mascot mood={p.arrived ? "cheer" : "walk"} size={58} title="Pip: you are here" />
                 </span>
               )}
             </div>

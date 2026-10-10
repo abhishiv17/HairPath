@@ -89,13 +89,13 @@ export default function JourneyApp() {
             <Mascot mood="wave" size={120} />
             <div>
               <p className="lead" style={{ margin: "0 0 12px" }}>
-                Pick a look, and ManeRoute turns it into a road you can walk: check-in photos measured by YouCam, a haircare
+                Pick a look, and HairPath turns it into a road you can walk: check-in photos measured by YouCam, a haircare
                 routine built for your hair, and reminders for trims.
               </p>
               <ol className="jr-how">
                 <li><b>Consult.</b> Try cuts on your own photo and get the route.</li>
                 <li><b>Start the journey</b> from your consultation document.</li>
-                <li><b>Check in</b> every few weeks. Rou moves when your length does.</li>
+                <li><b>Check in</b> every few weeks. Pip moves when your length does.</li>
               </ol>
             </div>
           </div>
@@ -220,8 +220,8 @@ function Dashboard({
     const events = [
       {
         uid: `${j.id}-checkin`,
-        title: "ManeRoute check-in",
-        description: `New photo for your journey to ${j.targetName}: face forward, hair down, same light. Open ManeRoute → My journey.`,
+        title: "HairPath check-in",
+        description: `New photo for your journey to ${j.targetName}: face forward, hair down, same light. Open HairPath → My journey.`,
         date: new Date(check.overdue ? Date.now() : check.date),
         rrule: `FREQ=DAILY;INTERVAL=${j.checkEveryDays}`,
       },
@@ -229,7 +229,7 @@ function Dashboard({
         ? [{
             uid: `${j.id}-trim`,
             title: j.direction === "grow" ? "Trim the ends (keep the length)" : "Haircut: keep the shape",
-            description: `On the way to ${j.targetName}. Bring your ManeRoute card.`,
+            description: `On the way to ${j.targetName}. Bring your HairPath card.`,
             date: new Date(trim.overdue ? Date.now() : trim.date),
             rrule: `FREQ=DAILY;INTERVAL=${routine.trimEveryDays}`,
           }]
@@ -238,7 +238,7 @@ function Dashboard({
     const blob = new Blob([buildIcs(events)], { type: "text/calendar" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "maneroute-reminders.ics";
+    a.download = "hairpath-reminders.ics";
     a.click();
     onNotice("Calendar file downloaded. Open it to add the reminders to your calendar.");
   };
@@ -270,11 +270,11 @@ function Dashboard({
         </div>
       </div>
 
-      <div className="rou">
+      <div className="pip">
         <Mascot mood={line.mood} size={56} />
-        <div className="rou-body">
-          <div className="rou-label">ROU</div>
-          <div className="rou-text">{line.text}</div>
+        <div className="pip-body">
+          <div className="pip-label">PIP</div>
+          <div className="pip-text">{line.text}</div>
         </div>
       </div>
 
@@ -401,8 +401,8 @@ function Dashboard({
 
       <section className="jr-section">
         <p className="small muted">
-          Journeys, photos and ticks stay in this browser on this device. ManeRoute&apos;s server stores none of it. Check-ins
-          measure length in YouCam&apos;s five bands; ManeRoute never predicts how fast hair grows.
+          Journeys, photos and ticks stay in this browser on this device. HairPath&apos;s server stores none of it. Check-ins
+          measure length in YouCam&apos;s five bands; HairPath never predicts how fast hair grows.
         </p>
         <button className="textbtn danger" onClick={onRemove}>Delete this journey</button>
       </section>
@@ -432,7 +432,7 @@ function LogCut({
     onSave(
       (cur) => ({ ...cur, milestones: cur.milestones.map((m) => (m.id === which ? { ...m, loggedAt: now } : m)), checkins: [...cur.checkins, c] }),
       name
-        ? `Logged: ${name}. Rou has moved along the road.`
+        ? `Logged: ${name}. Pip has moved along the road.`
         : j.answers
           ? "Trim logged. The next one is planned from today."
           : "Trim logged. Build your routine below and the next trim is planned from today.",

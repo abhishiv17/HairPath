@@ -11,7 +11,7 @@ export function handleError(e: unknown) {
   if (e instanceof YouCamError) {
     return jsonError(e.code, mapHttpError(e.code, e.message), e.httpStatus);
   }
-  console.error("[maneroute] unexpected error", e instanceof Error ? e.message : e);
+  console.error("[hairpath] unexpected error", e instanceof Error ? e.message : e);
   return jsonError("internal_error", "Something went wrong on our side. Please try again.", 500);
 }
 

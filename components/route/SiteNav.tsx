@@ -37,7 +37,7 @@ export default function SiteNav({
   const bar = (
     <header className="nav">
       <Link href="/" className="nav-brand">
-        ManeRoute
+        HairPath
         <small>From the hair you have to the hair you want</small>
       </Link>
       <ul className="nav-index">
@@ -71,7 +71,7 @@ export default function SiteNav({
           <Scene focus="road" />
           <div className="menu-inner">
             <div className="nav">
-              <Link href="/" className="nav-brand" onClick={() => setOpen(false)}>ManeRoute</Link>
+              <Link href="/" className="nav-brand" onClick={() => setOpen(false)}>HairPath</Link>
               <button className="menu-btn" onClick={() => setOpen(false)} autoFocus>Close</button>
             </div>
             <ol className="route-index">

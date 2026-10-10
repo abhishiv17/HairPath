@@ -1,4 +1,4 @@
-// ManeRoute routine engine: a haircare routine built from plain, ordered rules.
+// HairPath routine engine: a haircare routine built from plain, ordered rules.
 // Like the route engine, every step records the rule that produced it and a plain-language reason,
 // and nothing is a score or a promise. Products are named as types ("sulfate-free shampoo"), never brands.
 import type { HairCheck, LengthBand, RuleHit, TargetStyle, TextureGroup } from "./types.ts";
@@ -288,7 +288,7 @@ export function buildRoutine(input: RoutineInput): Routine {
       id: "flakes",
       when: "phase",
       title: "If flakes or itching last more than a month",
-      detail: "Ask a pharmacist or doctor. ManeRoute doesn't assess scalps.",
+      detail: "Ask a pharmacist or doctor. HairPath doesn't assess scalps.",
       why: { rule: "RT13_scalp", text: "Some flaking needs a treatment a shampoo can't give; that's a question for a professional." },
       track: false,
     });
@@ -331,7 +331,7 @@ export function buildRoutine(input: RoutineInput): Routine {
         ? veryShort && target.home === "barbershop"
           ? "Ask for the neckline and around the ears to be tidied while the top grows. Say “keep the length on top”."
           : "Ask for “shape only, keep the length”: a few millimetres off the ends, not a cut."
-        : "Book it before the shape grows out. Bring your ManeRoute card.",
+        : "Book it before the shape grows out. Bring your HairPath card.",
     why: {
       rule: "RT14_trim",
       text:

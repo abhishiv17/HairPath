@@ -175,11 +175,11 @@ test("week keys start on Monday", () => {
 // ---------- calendar ----------
 
 test("calendar files are valid all-day events with CRLF lines", () => {
-  const ics = buildIcs([{ uid: "a", title: "Check in, ManeRoute", description: "New photo; same light", date: new Date(2026, 9, 29), rrule: "FREQ=WEEKLY;INTERVAL=4" }]);
+  const ics = buildIcs([{ uid: "a", title: "Check in, HairPath", description: "New photo; same light", date: new Date(2026, 9, 29), rrule: "FREQ=WEEKLY;INTERVAL=4" }]);
   assert.ok(ics.startsWith("BEGIN:VCALENDAR\r\n"));
   assert.match(ics, /DTSTART;VALUE=DATE:20261029\r\n/);
   assert.match(ics, /DTEND;VALUE=DATE:20261030\r\n/);
-  assert.match(ics, /SUMMARY:Check in\\, ManeRoute/);
+  assert.match(ics, /SUMMARY:Check in\\, HairPath/);
   assert.match(ics, /RRULE:FREQ=WEEKLY;INTERVAL=4/);
   for (const line of ics.split("\r\n")) assert.ok(line.length <= 75, line);
 });

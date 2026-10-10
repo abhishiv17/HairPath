@@ -41,7 +41,7 @@ import SiteNav from "./route/SiteNav";
 type Step = "start" | "pick" | "tryon" | "plan" | "card";
 const STEPS: Step[] = ["start", "pick", "tryon", "plan", "card"];
 const STEP_LABELS = ["You", "Pick", "Try on", "Route", "Document"];
-const STORE = "maneroute.session.v2";
+const STORE = "hairpath.session.v2";
 
 const DEFAULT_PREFS: Preferences = { growOut: "maybe", keepLength: false, chemical: "unsure", maintenance: "medium", nonNegotiables: "" };
 
@@ -71,7 +71,7 @@ type Saved = {
 const persistable = (p: Preview) =>
   p.state === "success" ? { image: p.image } : p.state === "running" || p.state === "timeout" ? { taskId: p.taskId } : {};
 
-export default function ManeRoute() {
+export default function HairPath() {
   const [step, setStepState] = useState<Step>("start");
   const [photo, setPhoto] = useState<PreparedPhoto | null>(null);
   const [fileId, setFileId] = useState<string | null>(null);
@@ -99,14 +99,14 @@ export default function ManeRoute() {
   // ---------- navigation with real browser history ----------
   const setStep = useCallback((s: Step) => {
     setStepState(s);
-    if (!fromPop.current) window.history.pushState({ maneroute: s }, "", `#${s}`);
+    if (!fromPop.current) window.history.pushState({ hairpath: s }, "", `#${s}`);
     fromPop.current = false;
     window.scrollTo({ top: 0 });
   }, []);
 
   useEffect(() => {
     const onPop = (e: PopStateEvent) => {
-      const s = (e.state?.maneroute as Step) || "start";
+      const s = (e.state?.hairpath as Step) || "start";
       fromPop.current = true;
       setStepState(s);
       fromPop.current = false;
@@ -432,7 +432,7 @@ export default function ManeRoute() {
           lengthTaskRef.current = s.lengthTask;
           pollLengthTask(s.lengthTask);
         } else runLength(p);
-        window.history.replaceState({ maneroute: s.step }, "", `#${s.step}`);
+        window.history.replaceState({ hairpath: s.step }, "", `#${s.step}`);
         setStepState(s.step);
       } catch {
         sessionStorage.removeItem(STORE);
@@ -485,14 +485,14 @@ export default function ManeRoute() {
 
   useEffect(() => {
     try {
-      const s = localStorage.getItem("maneroute.shelf");
+      const s = localStorage.getItem("hairpath.shelf") ?? localStorage.getItem("maneroute.shelf"); // saved before the rename
       if (s === "barbershop" || s === "salon" || s === "all") setShelfState((cur) => cur ?? s);
     } catch {}
   }, []);
   const setShelf = (s: Shelf) => {
     setShelfState(s);
     try {
-      localStorage.setItem("maneroute.shelf", s);
+      localStorage.setItem("hairpath.shelf", s);
     } catch {}
   };
 

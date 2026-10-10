@@ -1,12 +1,12 @@
-# ManeRoute
+# HairPath
 
 **From the hair you have to the hair you want.**
 
-ManeRoute is a mobile-first web app (PWA) that turns a hairstyle goal into a road you can actually walk. You try any cut on your own face, see how far it is from your hair today, and get a plan your barber or stylist can use. Then you track the journey: check-in photos measured by AI, a haircare routine built for your hair, and reminders for trims.
+HairPath is a mobile-first web app (PWA) that turns a hairstyle goal into a road you can actually walk. You try any cut on your own face, see how far it is from your hair today, and get a plan your barber or stylist can use. Then you track the journey: check-in photos measured by AI, a haircare routine built for your hair, and reminders for trims.
 
-Your guide is **Rou**, a lion-cub road-tripper with a sunset mane, a map-pin tail and a satchel holding your consultation card.
+Your guide is **Pip**, a lion-cub road-tripper with a sunset mane, a map-pin tail and a satchel holding your consultation card.
 
-> ManeRoute is a planning tool. Previews are references, not guarantees. It does not predict growth speed, and it is not medical advice.
+> HairPath is a planning tool. Previews are references, not guarantees. It does not predict growth speed, and it is not medical advice.
 
 ---
 
@@ -14,7 +14,7 @@ Your guide is **Rou**, a lion-cub road-tripper with a sunset mane, a map-pin tai
 
 Most bad haircuts come from a bad conversation, not bad cutting. An inspiration photo can't say *"my hair is nowhere near that long"*, *"no perms"* or *"I have five minutes in the morning"*. Try-on apps make it worse: they show a perfect destination with no sense of how far away it is, and nothing happens after the photo.
 
-ManeRoute shows the **route**, and then walks it with you.
+HairPath shows the **path**, and then walks it with you.
 
 ## What you can do
 
@@ -30,7 +30,7 @@ ManeRoute shows the **route**, and then walks it with you.
 ### 2. Walk the road (`/journey`)
 Press **Start my journey** on the document and the plan becomes a journey:
 
-- **The road.** Every stop shows its AI preview: where you started → along-the-way cuts → your hair grown → the destination. Rou stands where you are.
+- **The road.** Every stop shows its AI preview: where you started → along-the-way cuts → your hair grown → the destination. Pip stands where you are.
 - **Check-ins.** Every few weeks you take one new photo. YouCam measures your length again, and Hairstyle Try-On **re-renders your destination on that photo**, so you see it fitting your own hair a little better each time, side by side with the day-1 render. You move along the road when your length band changes or when you log the cut. Progress never goes backwards.
 - **Your pace.** Worked out from your own measurements ("1 band longer in 9 weeks"), never predicted.
 - **Photo history.** A slider between your first and latest photo, plus a log of every check-in and cut.
@@ -61,12 +61,12 @@ All calls go through Next.js route handlers on the server, and the API key never
 ## Honest by design
 
 - **Rules, not scores.** The route (rules `R0`–`R6`, `P1`–`P4`) and the routine (`RT1`–`RT15`) are plain, ordered rules. Every result shows the rule id and a sentence, and there are no "92% match" numbers. See [docs/ROUTE_RULES.md](docs/ROUTE_RULES.md).
-- **Real units only.** YouCam returns five visible length bands, so ManeRoute counts distance in bands. It never invents centimetres or weeks.
+- **Real units only.** YouCam returns five visible length bands, so HairPath counts distance in bands. It never invents centimetres or weeks.
 - **Uncertainty is kept.** "Short hair *or longer*" stays a lower bound, and those cases are sent to the stylist.
 
 ## Privacy
 
-- Photos go only to YouCam, for analysis and previews. **ManeRoute's server stores nothing**: no database, no accounts, no analytics.
+- Photos go only to YouCam, for analysis and previews. **HairPath's server stores nothing**: no database, no accounts, no analytics.
 - Your session, saved plans, journeys, check-in photos (small copies) and routine ticks live **in your browser on your device**, and you can delete them with one tap.
 - YouCam keeps processed files for up to 30 days under its own policy. See [docs/PRIVACY.md](docs/PRIVACY.md).
 
@@ -105,7 +105,7 @@ npm run build        # NEXT_DIST_DIR=.next-check npm run build works while `npm 
 npm run e2e -- --size=phone    # real-browser walk-through with REAL YouCam calls (~7 units)
 ```
 
-To try everything for free, run the dev server with `YOUCAM_MOCK=1`. The `maneroute-mock` entry in `.claude/launch.json` does this on port 3001. CI (`.github/workflows/ci.yml`) runs typecheck, tests and build on every push.
+To try everything for free, run the dev server with `YOUCAM_MOCK=1`. The `hairpath-mock` entry in `.claude/launch.json` does this on port 3001. CI (`.github/workflows/ci.yml`) runs typecheck, tests and build on every push.
 
 ## Project layout
 
@@ -115,11 +115,11 @@ app/
   api/                    photo · length · texture · vto · extend · health (server-only YouCam calls)
 components/
   Landing.tsx             home page, told in picture-book chapters
-  ManeRoute.tsx           the consultation flow (state, history, refresh-safe session)
+  HairPath.tsx            the consultation flow (state, history, refresh-safe session)
   flow/                   Start · Pick · TryOn · Plan · CardView · shared
   journey/                JourneyApp · RoadMap · CheckIn · Routine
   route/                  painted Scene, nav, length Measure, timeline, errors
-  Mascot.tsx              Rou: 7 moods (happy, wave, walk, cheer, wow, think, oops), pure SVG
+  Mascot.tsx              Pip: 7 moods (happy, wave, walk, cheer, wow, think, oops), pure SVG
   CameraCapture.tsx       live camera with front / left / right framing guides
   Plans.tsx               My plans archive
 lib/
@@ -155,7 +155,7 @@ docs/                     product, research, architecture, rules, privacy, testi
 
 ## Tech
 
-Next.js 16 · React 19 · TypeScript · YouCam AI APIs · IndexedDB · Canvas · Web Share API · iCalendar · PWA. There are no UI libraries. Rou, the painted landscape and every illustration are hand-written SVG.
+Next.js 16 · React 19 · TypeScript · YouCam AI APIs · IndexedDB · Canvas · Web Share API · iCalendar · PWA. There are no UI libraries. Pip, the painted landscape and every illustration are hand-written SVG.
 
 ## Third-party assets
 

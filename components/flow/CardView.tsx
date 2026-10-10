@@ -61,7 +61,7 @@ export default function CardView({
   }, [full]);
 
   const chair = useMemo(() => chairFor(data), [data]);
-  const fileName = `maneroute-${data.target.id}.png`;
+  const fileName = `hairpath-${data.target.id}.png`;
   const download = () => {
     if (!png) return;
     const a = document.createElement("a");
@@ -75,7 +75,7 @@ export default function CardView({
     const file = new File([png], fileName, { type: "image/png" });
     try {
       if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], title: "My ManeRoute consultation", text: `Goal: ${data.target.name}` });
+        await navigator.share({ files: [file], title: "My HairPath consultation", text: `Goal: ${data.target.name}` });
         return;
       }
     } catch (e) {
@@ -137,7 +137,7 @@ export default function CardView({
 
       <div className="doc-layout">
         <article className="doc" aria-label="Consultation document">
-          <div className="doc-head"><span>ManeRoute / Consultation</span><span>{stamp()}</span></div>
+          <div className="doc-head"><span>HairPath / Consultation</span><span>{stamp()}</span></div>
           <div className="doc-photos">
             {photos.map((p) => (
               <figure key={p.label}><img src={p.src} alt={p.label} /><figcaption>{p.label}</figcaption></figure>
@@ -180,7 +180,7 @@ export default function CardView({
             <div className="doc-label">Ask your stylist</div>
             <ul className="doc-list">{full.questions.map((q) => <li key={q}>{q}</li>)}</ul>
           </div>
-          <div className="doc-foot"><span>Previews: YouCam AI · references, not guarantees</span><span>ROU ●</span></div>
+          <div className="doc-foot"><span>Previews: YouCam AI · references, not guarantees</span><span>PIP ●</span></div>
         </article>
 
         <div>
@@ -254,7 +254,7 @@ export default function CardView({
         <div className="kicker"><span>End of session</span></div>
         <p className="small muted" style={{ margin: "6px 0" }}>
           Clears your photos, previews and this document from the page. Saved plans stay on this device until you delete
-          them. ManeRoute&apos;s server stores none of this.
+          them. HairPath&apos;s server stores none of this.
         </p>
         <button className="textbtn danger" onClick={onDelete}>Delete session data</button>
       </section>

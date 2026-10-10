@@ -97,18 +97,18 @@ export default function Start({ onDone }: { onDone: (photo: PreparedPhoto) => vo
         <li className="done"><span className="wp-dot" /><div className="wp-title">Shoulders up</div><div className="wp-meta">Frame shoulders · face the light</div></li>
       </ol>
 
-      <div className="rou" aria-hidden>
+      <div className="pip" aria-hidden>
         <Mascot mood="wave" size={56} />
-        <div className="rou-body">
-          <div className="rou-label">ROU</div>
-          <div className="rou-text caps">Good light. Face forward.</div>
+        <div className="pip-body">
+          <div className="pip-label">PIP</div>
+          <div className="pip-text caps">Good light. Face forward.</div>
         </div>
       </div>
 
       <label className="check consent">
         <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
         <span>
-          Send my photo to YouCam (Perfect Corp.) to analyse my hair and make try-ons. ManeRoute stores nothing on its
+          Send my photo to YouCam (Perfect Corp.) to analyse my hair and make try-ons. HairPath stores nothing on its
           servers; YouCam keeps processed files for up to 30 days. <a href="/#privacy" target="_blank" rel="noreferrer">Privacy</a>
         </span>
       </label>

@@ -1,6 +1,6 @@
-// Minimal service worker: makes ManeRoute installable and caches static assets.
+// Minimal service worker: makes HairPath installable and caches static assets.
 // Never caches API calls or images from the consultation, which stay in page memory only.
-const CACHE = "maneroute-v2";
+const CACHE = "hairpath-v2";
 
 self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", (e) => {

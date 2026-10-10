@@ -29,7 +29,7 @@ export const shortBand = (b: HairBaseline["lengthBand"]) => LENGTH_BAND_LABELS[b
 // ---------- Zoomable previews ----------
 
 export function zoom(src: string, label: string) {
-  window.dispatchEvent(new CustomEvent("maneroute:zoom", { detail: { src, label } }));
+  window.dispatchEvent(new CustomEvent("hairpath:zoom", { detail: { src, label } }));
 }
 
 export function Lightbox() {
@@ -37,10 +37,10 @@ export function Lightbox() {
   useEffect(() => {
     const on = (e: Event) => setImg((e as CustomEvent).detail);
     const esc = (e: KeyboardEvent) => e.key === "Escape" && setImg(null);
-    window.addEventListener("maneroute:zoom", on);
+    window.addEventListener("hairpath:zoom", on);
     window.addEventListener("keydown", esc);
     return () => {
-      window.removeEventListener("maneroute:zoom", on);
+      window.removeEventListener("hairpath:zoom", on);
       window.removeEventListener("keydown", esc);
     };
   }, []);

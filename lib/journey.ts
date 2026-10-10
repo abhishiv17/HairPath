@@ -1,4 +1,4 @@
-// ManeRoute journeys: a route the user is actually walking.
+// HairPath journeys: a route the user is actually walking.
 // A journey keeps the milestones from the consultation (now → along the way → grown → target),
 // every check-in (a new photo re-measured by YouCam Hair Length Detection, or a logged cut),
 // and the routine ticks. Everything here is pure, so it is unit-tested and storage-agnostic.
@@ -85,7 +85,7 @@ export type Progress = {
   states: MilestoneState[];
   /** Index of the furthest milestone reached. */
   at: number;
-  /** 0…1 along the road, for placing Rou. Counted in milestones, never in time. */
+  /** 0…1 along the road, for placing Pip. Counted in milestones, never in time. */
   fraction: number;
   arrived: boolean;
   next: Milestone | null;
@@ -198,7 +198,7 @@ function startOfDay(t: number) {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
 }
 
-// ---------- Rou's line for the dashboard ----------
+// ---------- Pip's line for the dashboard ----------
 
 export type RouLine = { mood: "happy" | "cheer" | "wow" | "think" | "wave"; text: string };
 

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Mascot from "@/components/Mascot";
 
 // Chapter one: the same person at both ends of the road, and the road runs both ways.
-// Rou walks from "now" to "target"; when Rou arrives the two photos flip places and the
+// Pip walks from "now" to "target"; when Pip arrives the two photos flip places and the
 // route flips with them (grow it out ⇄ cut it shorter). A button flips it by hand.
 
 const LONG = { src: "/examples/salon-now.jpg", alt: "Long wavy hair" };
@@ -76,7 +76,7 @@ export default function HereThere() {
         <div className="states-road">
           <div className="road-track" aria-hidden>
             <div className={`road-walker ${walking ? "go" : ""} ${arrived ? "arrived" : ""}`}>
-              <Mascot mood={arrived ? "cheer" : walking ? "walk" : "happy"} size={56} title="Rou walking the route" />
+              <Mascot mood={arrived ? "cheer" : walking ? "walk" : "happy"} size={56} title="Pip walking the route" />
             </div>
             <i />
           </div>
@@ -98,7 +98,7 @@ export default function HereThere() {
           <span>Flip it ⇄</span>
         </button>
         {!auto && (
-          <button type="button" className="swap-play" onClick={() => setAuto(true)}>Let Rou walk it</button>
+          <button type="button" className="swap-play" onClick={() => setAuto(true)}>Let Pip walk it</button>
         )}
         <span className="sr-only" aria-live="polite">{`${label}: from ${now.alt.toLowerCase()} to ${target.alt.toLowerCase()}`}</span>
       </div>

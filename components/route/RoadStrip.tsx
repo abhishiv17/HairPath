@@ -18,7 +18,7 @@ export type RoadStop = {
   onRetry?: () => void;
 };
 
-// The route as a road: your face at every stop, left to right, on a painted road with Rou at
+// The route as a road: your face at every stop, left to right, on a painted road with Pip at
 // the start. Swipeable on a phone, the full width of the page on a laptop.
 export default function RoadStrip({ stops }: { stops: RoadStop[] }) {
   return (
@@ -41,7 +41,7 @@ export default function RoadStrip({ stops }: { stops: RoadStop[] }) {
                 </span>
               )}
               {i === 0 && (
-                <span className="road-rou" aria-hidden>
+                <span className="road-pip" aria-hidden>
                   <Mascot mood="walk" size={70} />
                 </span>
               )}

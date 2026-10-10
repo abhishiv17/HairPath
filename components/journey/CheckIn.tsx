@@ -13,7 +13,7 @@ import { LENGTH_BANDS } from "@/lib/types";
 
 // A check-in: one new front photo, measured again by YouCam Hair Length Detection, with the
 // destination re-rendered on it by YouCam Hairstyle Try-On (about 2 units in all). The band
-// moves Rou along the road; the re-render shows the destination fitting today's hair even when
+// moves Pip along the road; the re-render shows the destination fitting today's hair even when
 // the band hasn't changed yet. Nothing is predicted.
 type Phase =
   | { at: "intro" }
@@ -157,11 +157,11 @@ export default function CheckIn({
           <figure><img src={phase.photo.dataUrl} alt="Your new photo" /><figcaption>Today</figcaption></figure>
         </div>
         {busy && (
-          <div className="rou" role="status">
+          <div className="pip" role="status">
             <Mascot mood="think" size={52} />
-            <div className="rou-body">
-              <div className="rou-label">ROU</div>
-              <div className="rou-text">YouCam is measuring your length…</div>
+            <div className="pip-body">
+              <div className="pip-label">PIP</div>
+              <div className="pip-text">YouCam is measuring your length…</div>
               <div className="loader-line" />
             </div>
           </div>
@@ -205,7 +205,7 @@ export default function CheckIn({
               {d === 0
                 ? `Same band as last time (${BAND_SHORT[before].toLowerCase()}). Hair grows inside a band long before it crosses into the next one, so this is normal.`
                 : toward
-                  ? `Up from ${BAND_SHORT[before].toLowerCase()}. That's a new band, and Rou has moved along the road.`
+                  ? `Up from ${BAND_SHORT[before].toLowerCase()}. That's a new band, and Pip has moved along the road.`
                   : `That's ${BAND_SHORT[before].toLowerCase()} before and ${BAND_SHORT[after].toLowerCase()} now, away from the destination. A cut, a different angle or tied-back hair can do this; retake if it looks wrong.`}
             </p>
             {phase.checkin.simulated && <p className="mono muted">Simulated result, not from YouCam</p>}

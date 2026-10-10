@@ -1,10 +1,10 @@
-# ManeRoute: product definition
+# HairPath: product definition
 
 > **From the hair you have to the hair you want.**
 
 ## One-line pitch
 
-ManeRoute turns "I want this hairstyle" into a clear, shareable consultation plan. It detects your current visible hair length with YouCam AI, previews the target and an in-between stage with YouCam Hairstyle VTO, and uses transparent rules to show the route from here to there.
+HairPath turns "I want this hairstyle" into a clear, shareable consultation plan. It detects your current visible hair length with YouCam AI, previews the target and an in-between stage with YouCam Hairstyle VTO, and uses transparent rules to show the route from here to there.
 
 ## The problem
 
@@ -22,7 +22,7 @@ Try-on apps don't fix this. They show a **destination**, not the distance from w
 
 ## Who it's for
 
-| User | Need | What ManeRoute gives them |
+| User | Need | What HairPath gives them |
 | --- | --- | --- |
 | **Client** before an appointment (primary) | Explain what they want, and learn whether it's realistic | A route, AI previews, and a card to share |
 | **Barber or stylist** (receives the card) | Understand the goal, limits and starting point before cutting | Baseline, preferences, non-negotiables, questions, previews |
@@ -30,7 +30,7 @@ Try-on apps don't fix this. They show a **destination**, not the distance from w
 
 ## Core experience
 
-1. **Onboarding**: what ManeRoute is and isn't, how it works, a photo guide with do's and don'ts, and privacy consent.
+1. **Onboarding**: what HairPath is and isn't, how it works, a photo guide with do's and don'ts, and privacy consent.
 2. **Capture**: a live camera with a face-and-shoulder guide, a 3-second timer and a lighting hint, with photo upload as a fallback.
 3. **Baseline**: YouCam Hair Length Detection returns a length category, and "or longer" results are shown as uncertain.
 4. **Target**: 58 cuts in Men's / Women's / All lists (chosen by the user, never inferred), each mapped to a tested YouCam template and tried on with Hairstyle VTO.

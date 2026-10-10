@@ -20,7 +20,7 @@ const ROUTES = [
   ["Grow it out", "The target is longer. You'll see the cuts to ask for along the way."],
   ["Cut it shorter", "The target is shorter. Agree on the shape before anything comes off."],
   ["Ask your stylist", "Technique, texture or an unclear length reading. A professional checks first."],
-  ["Retake the photo", "The photo couldn't be read. ManeRoute won't guess."],
+  ["Retake the photo", "The photo couldn't be read. HairPath won't guess."],
 ] as const;
 
 const CHAPTERS = [
@@ -52,7 +52,7 @@ export default function Landing() {
           <Link href="/consult" className="cta">Start your route</Link>
           <p className="hero-note">First try-on in about a minute · No account</p>
         </div>
-        <div className="hero-rou"><Mascot mood="wave" size={150} title="Rou, the ManeRoute guide, waving from the road" /></div>
+        <div className="hero-pip"><Mascot mood="wave" size={150} title="Pip, the HairPath guide, waving from the road" /></div>
       </section>
 
       <ChapterRail chapters={CHAPTERS} />
@@ -63,7 +63,7 @@ export default function Landing() {
           <h2 className="display h2">A long way from here to there</h2>
           <p className="lead">
             You know the cut you want. You don&apos;t know how far away it is, what to ask for in between, or how to explain it
-            in the chair. ManeRoute draws the road.
+            in the chair. HairPath draws the road.
           </p>
           <HereThere />
           <p className="fine">Real YouCam Hairstyle Try-On on a YouCam sample model.</p>
@@ -139,10 +139,10 @@ export default function Landing() {
           <p className="chapter-num">Chapter four</p>
           <h2 className="display h2">Then walk the road</h2>
           <p className="lead">
-            A plan is only the start. Your journey keeps the previews as stops on a road, and Rou walks it with you.
+            A plan is only the start. Your journey keeps the previews as stops on a road, and Pip walks it with you.
           </p>
           <div className="walk-grid">
-            <div className="walk-rou"><Mascot mood="walk" size={150} title="Rou walking the road" /></div>
+            <div className="walk-pip"><Mascot mood="walk" size={150} title="Pip walking the road" /></div>
             <ul className="fact-cards">
               <li>
                 <h4 className="display">Check-ins that measure</h4>
@@ -196,7 +196,7 @@ export default function Landing() {
           <p className="chapter-num">Chapter six</p>
           <h2 className="display h2">Your photo stays yours</h2>
           <ul className="fact-cards on-dark">
-            <li><h4 className="display">Sent only to YouCam</h4><p>For the analysis and try-ons. ManeRoute&apos;s server stores nothing.</p></li>
+            <li><h4 className="display">Sent only to YouCam</h4><p>For the analysis and try-ons. HairPath&apos;s server stores nothing.</p></li>
             <li><h4 className="display">Kept on your device</h4><p>Your session, plans, journeys and check-in photos live in your browser. One tap deletes them.</p></li>
             <li><h4 className="display">No account, no tracking</h4><p>No sign-up, no analytics, no guesses about gender, ethnicity or health.</p></li>
             <li><h4 className="display">Said plainly</h4><p>YouCam keeps processed files for up to 30 days under its own policy.</p></li>
@@ -209,8 +209,8 @@ export default function Landing() {
           <p className="chapter-num">Before you set off</p>
           <h2 className="display h2">Questions</h2>
           <details><summary>Is this a haircut filter?</summary><p>No. The try-on is the start. The point is the distance from your hair now, the route, and the card you take to your appointment.</p></details>
-          <details><summary>How does tracking work?</summary><p>Start a journey from your consultation. Every few weeks, take one new photo: YouCam measures your length band again, renders your destination on the new photo, and Rou moves along the road when your length changes. Log your cuts, tick off your routine, and add the reminders to your calendar. It all stays on your device.</p></details>
-          <details><summary>Why no millimetres or “weeks to grow”?</summary><p>YouCam measures length as one of five visible bands, and growth speed differs for everyone. ManeRoute shows the real bands and the distance between them instead of inventing numbers.</p></details>
+          <details><summary>How does tracking work?</summary><p>Start a journey from your consultation. Every few weeks, take one new photo: YouCam measures your length band again, renders your destination on the new photo, and Pip moves along the road when your length changes. Log your cuts, tick off your routine, and add the reminders to your calendar. It all stays on your device.</p></details>
+          <details><summary>Why no millimetres or “weeks to grow”?</summary><p>YouCam measures length as one of five visible bands, and growth speed differs for everyone. HairPath shows the real bands and the distance between them instead of inventing numbers.</p></details>
           <details><summary>What is the texture check?</summary><p>Two extra photos with your head turned. YouCam Hair Type Detection reads your natural texture, which changes the advice for wavy, curly and sleek looks. It&apos;s optional and only offered when a look depends on texture.</p></details>
           <details><summary>Where are my saved plans?</summary><p>Only in this browser on this device. They are never uploaded.</p></details>
           <details><summary>Does it work on a laptop?</summary><p>Yes, with your webcam or an uploaded photo. On a phone it uses the front camera.</p></details>
@@ -228,7 +228,7 @@ export default function Landing() {
 
       <footer className="footer">
         <div className="wrap">
-          <span className="footer-brand">ManeRoute</span>
+          <span className="footer-brand">HairPath</span>
           <span>Built on YouCam Hair Length Detection, Hair Type Detection, Hairstyle Try-On and Hair Extension.</span>
           <span>A planning tool. Previews are references, not guarantees. Not medical advice.</span>
         </div>

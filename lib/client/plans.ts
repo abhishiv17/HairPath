@@ -1,6 +1,8 @@
 // "My plans": consultation cards saved on this device only (IndexedDB), never on a server.
 // Every call fails soft: in private windows or with storage blocked, saving is simply unavailable.
 
+import { openDb } from "./idb";
+
 export type SavedPlan = {
   id: string;
   createdAt: number;
@@ -14,18 +16,11 @@ export type SavedPlan = {
   thumb: string; // small data URL for the list
 };
 
-const DB = "maneroute";
+const DB = "hairpath";
+const LEGACY_DB = "maneroute";
 const STORE = "plans";
 
-function open(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
-    if (typeof indexedDB === "undefined") return reject(new Error("no indexeddb"));
-    const req = indexedDB.open(DB, 1);
-    req.onupgradeneeded = () => req.result.createObjectStore(STORE, { keyPath: "id" });
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error);
-  });
-}
+const open = () => openDb(DB, STORE, LEGACY_DB);
 
 async function tx<T>(mode: IDBTransactionMode, fn: (s: IDBObjectStore) => IDBRequest<T>): Promise<T> {
   const db = await open();

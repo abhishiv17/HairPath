@@ -1,4 +1,4 @@
-// End-to-end walk through ManeRoute in a real browser (Chrome or Edge via playwright-core).
+// End-to-end walk through HairPath in a real browser (Chrome or Edge via playwright-core).
 // Uses REAL YouCam calls through the running app: a full run spends about 9 units.
 //
 //   npm run dev                       (in another terminal)
