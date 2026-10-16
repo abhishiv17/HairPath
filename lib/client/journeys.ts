@@ -1,9 +1,11 @@
-// Journeys, stored on this device only (IndexedDB), never on a server.
+// Journeys, stored on this device (IndexedDB). For signed-in users each change is also mirrored to
+// their cloud copy (see sync.ts); guests' journeys never leave the device.
 // A separate database from "My plans", so neither can break the other's schema.
 import { getStyle } from "@/lib/catalog";
 import { directionOf, type Journey, type Milestone } from "@/lib/journey";
 import type { GrowOutLength, LengthBand } from "@/lib/types";
 import type { CardData } from "./card";
+import { queueItem, removeItems } from "./cloudItems";
 import { openDb } from "./idb";
 import { makeThumb } from "./plans";
 
@@ -36,10 +38,21 @@ export async function listJourneys(): Promise<Journey[]> {
 export async function putJourney(j: Journey): Promise<Journey> {
   const next = { ...j, updatedAt: Date.now() };
   await tx("readwrite", (s) => s.put(next));
+  queueItem("journey", next.id, async () => ({ updatedAt: next.updatedAt, data: next }));
   return next;
 }
 
+/** Writes a journey that came from the cloud as is, without sending it back. */
+export async function putJourneyFromCloud(j: Journey): Promise<void> {
+  await tx("readwrite", (s) => s.put(j));
+}
+
 export async function deleteJourney(id: string): Promise<void> {
+  await tx("readwrite", (s) => s.delete(id));
+  void removeItems("journey", [id]);
+}
+
+export async function deleteJourneyLocal(id: string): Promise<void> {
   await tx("readwrite", (s) => s.delete(id));
 }
 

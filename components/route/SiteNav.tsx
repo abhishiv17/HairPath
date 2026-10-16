@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Scene from "./Scene";
+import { useAccount } from "@/lib/client/cloud";
 
 // Site navigation, written in white over the painted landscape.
 // `overlay`: sits on top of the landing hero. Otherwise it brings its own short painted band.
@@ -13,12 +14,25 @@ const ITEMS = [
   { href: "/plans", label: "My plans" },
 ];
 
+/** Sign-in state at a glance. Signing in is optional; this is just the way in. */
+function AccountChip() {
+  const acc = useAccount();
+  if (acc.state === "off" || acc.state === "loading") return null;
+  const on = acc.state === "user";
+  return (
+    <Link href="/account" className={`nav-acct ${on ? "on" : ""}`} title={on ? `Signed in as ${acc.email}` : "Optional: sign in to sync"}>
+      <i aria-hidden />
+      {on ? "Synced" : "Sign in"}
+    </Link>
+  );
+}
+
 export default function SiteNav({
   current,
   right,
   overlay = false,
 }: {
-  current: "/" | "/consult" | "/journey" | "/plans" | null;
+  current: "/" | "/consult" | "/journey" | "/plans" | "/account" | null;
   right?: React.ReactNode;
   overlay?: boolean;
 }) {
@@ -50,6 +64,7 @@ export default function SiteNav({
       {right ?? (
         <Link href="/consult" className="nav-cta">Start</Link>
       )}
+      <AccountChip />
       <button className="menu-btn" aria-expanded={open} aria-controls="route-menu" onClick={() => setOpen(true)}>
         Menu
       </button>

@@ -6,6 +6,7 @@ import Mascot from "@/components/Mascot";
 import SiteNav from "@/components/route/SiteNav";
 import { CompareSlider, Lightbox, zoom } from "@/components/flow/shared";
 import { deleteJourney, listJourneys, putJourney } from "@/lib/client/journeys";
+import { useCloudSync } from "@/lib/client/sync";
 import { buildIcs } from "@/lib/ics";
 import {
   BAND_SHORT,
@@ -23,7 +24,7 @@ import RoadMap from "./RoadMap";
 import CheckIn from "./CheckIn";
 import Routine, { RoutineSetup, routineFor } from "./Routine";
 
-// MY JOURNEY: the route you're actually walking. Stored on this device only.
+// MY JOURNEY: the route you're actually walking. Stored on this device (and synced when signed in).
 const DAY = 86_400_000;
 const date = (t: number) => new Date(t).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 const dueText = (d: { inDays: number; overdue: boolean }) =>
@@ -56,6 +57,14 @@ export default function JourneyApp() {
     if (id) window.history.replaceState(null, "", `#${id}`);
   }, [id]);
 
+  // Journeys from the user's other devices arrive after sign-in.
+  useCloudSync(() =>
+    listJourneys().then((all) => {
+      setList(all);
+      setId((cur) => (cur && all.some((j) => j.id === cur) ? cur : all.find((j) => j.status === "active")?.id ?? all[0]?.id ?? null));
+    }),
+  );
+
   const journey = list?.find((j) => j.id === id) ?? null;
 
   /** Applies a change to the latest copy of a journey, shows it at once, then stores it. */
@@ -83,7 +92,7 @@ export default function JourneyApp() {
       <div className="flow">
         <SiteNav current="/journey" />
         <main className="flow-main" style={{ paddingTop: 18 }}>
-          <div className="kicker"><span>My journey · this device only</span></div>
+          <div className="kicker"><span>My journey</span></div>
           <h1 className="display h2 screen-title">No journey yet.</h1>
           <div className="jr-empty">
             <Mascot mood="wave" size={120} />
@@ -401,7 +410,7 @@ function Dashboard({
 
       <section className="jr-section">
         <p className="small muted">
-          Journeys, photos and ticks stay in this browser on this device. HairPath&apos;s server stores none of it. Check-ins
+          Journeys, photos and ticks stay in this browser on this device, and sync to your other devices only if you sign in. Check-ins
           measure length in YouCam&apos;s five bands; HairPath never predicts how fast hair grows.
         </p>
         <button className="textbtn danger" onClick={onRemove}>Delete this journey</button>
