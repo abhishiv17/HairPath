@@ -285,7 +285,7 @@ export default function Pick({
             </button>
           </div>
         ) : (
-          <button className="cta block" disabled>{shelf ? "Pick a cut" : "Choose Men's, Women's or All"}</button>
+          <button className="cta block" disabled>{shelf ? "Pick a cut" : "Choose a list above"}</button>
         )}
       </div>
     </main>

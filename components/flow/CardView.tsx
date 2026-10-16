@@ -278,46 +278,48 @@ export default function CardView({
 
       {notice && <p className="note ok" role="status">{notice}</p>}
 
-      {cloudConfigured && chair.length > 0 && (
-        <section style={{ marginTop: 24 }}>
-          {shareId ? (
-            <BarberLink shareId={shareId} steps={chair} onStop={stopLink} />
-          ) : (
-            <div className="jr-cta-card">
-              <Mascot mood="wave" size={84} />
-              <div>
-                <div className="chapter-num" style={{ margin: 0 }}>New · live with your barber</div>
-                <h2 className="display h3" style={{ margin: "4px 0 8px" }}>Send it to your barber</h2>
-                <p className="small">
-                  A link and QR code. Your barber opens it on their phone, with no app or account, and taps <b>Can do</b> or{" "}
-                  <b>Let&apos;s talk</b> on each step. You see their answers here, live.
-                </p>
-                <button className="cta" onClick={createLink} disabled={!png || sharing}>
-                  {sharing ? "Creating link…" : png ? "Create barber link" : "Preparing…"}
-                </button>
-                <p className="tiny muted" style={{ margin: "8px 0 0" }}>
-                  Uploads this document&apos;s text and small previews to HairPath&apos;s cloud until you stop sharing. No account needed.
-                </p>
+      <div className="card-next">
+        {cloudConfigured && chair.length > 0 && (
+          <section>
+            {shareId ? (
+              <BarberLink shareId={shareId} steps={chair} onStop={stopLink} />
+            ) : (
+              <div className="jr-cta-card">
+                <Mascot mood="wave" size={84} />
+                <div>
+                  <div className="chapter-num" style={{ margin: 0 }}>New · live with your barber</div>
+                  <h2 className="display h3" style={{ margin: "4px 0 8px" }}>Send it to your barber</h2>
+                  <p className="small">
+                    A link and QR code. Your barber opens it on their phone, with no app or account, and taps <b>Can do</b> or{" "}
+                    <b>Let&apos;s talk</b> on each step. You see their answers here, live.
+                  </p>
+                  <button className="cta" onClick={createLink} disabled={!png || sharing}>
+                    {sharing ? "Creating link…" : png ? "Create barber link" : "Preparing…"}
+                  </button>
+                  <p className="tiny muted" style={{ margin: "8px 0 0" }}>
+                    Uploads this document&apos;s text and small previews to HairPath&apos;s cloud until you stop sharing. No account needed.
+                  </p>
+                </div>
               </div>
-            </div>
-          )}
-        </section>
-      )}
+            )}
+          </section>
+        )}
 
-      {canJourney && (
-        <section className="jr-cta-card" style={{ marginTop: 24 }}>
-          <Mascot mood="walk" size={84} />
-          <div>
-            <div className="chapter-num" style={{ margin: 0 }}>Next: walk the route</div>
-            <h2 className="display h3" style={{ margin: "4px 0 8px" }}>Start this journey</h2>
-            <p className="small">
-              Turn this plan into a road you track: check-in photos re-measured by YouCam, a haircare routine for your hair
-              with a daily checklist, and trim reminders. Saved on this device.
-            </p>
-            <button className="cta" onClick={startJourney} disabled={starting}>{starting ? "Setting off…" : "Start my journey"}</button>
-          </div>
-        </section>
-      )}
+        {canJourney && (
+          <section className="jr-cta-card">
+            <Mascot mood="walk" size={84} />
+            <div>
+              <div className="chapter-num" style={{ margin: 0 }}>Next: walk the route</div>
+              <h2 className="display h3" style={{ margin: "4px 0 8px" }}>Start this journey</h2>
+              <p className="small">
+                Turn this plan into a road you track: check-in photos re-measured by YouCam, a haircare routine for your hair
+                with a daily checklist, and trim reminders. Saved on this device.
+              </p>
+              <button className="cta" onClick={startJourney} disabled={starting}>{starting ? "Setting off…" : "Start my journey"}</button>
+            </div>
+          </section>
+        )}
+      </div>
 
       <div className="dock">
         <button className="cta block" onClick={share} disabled={!png}>{png ? "Share" : "Preparing…"}</button>

@@ -21,8 +21,17 @@ function AccountChip() {
   const on = acc.state === "user";
   return (
     <Link href="/account" className={`nav-acct ${on ? "on" : ""}`} title={on ? `Signed in as ${acc.email}` : "Optional: sign in to sync"}>
-      <i aria-hidden />
-      {on ? "Synced" : "Sign in"}
+      <span className="nav-acct-icon" aria-hidden>
+        {on ? (
+          (acc.email[0] ?? "✓").toUpperCase()
+        ) : (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+            <circle cx="12" cy="8.5" r="3.8" />
+            <path d="M4.5 20c1.3-3.6 4.2-5.4 7.5-5.4s6.2 1.8 7.5 5.4" />
+          </svg>
+        )}
+      </span>
+      <span>{on ? "Synced" : "Sign in"}</span>
     </Link>
   );
 }
@@ -66,6 +75,7 @@ export default function SiteNav({
       )}
       <AccountChip />
       <button className="menu-btn" aria-expanded={open} aria-controls="route-menu" onClick={() => setOpen(true)}>
+        <span className="menu-ico" aria-hidden><i /><i /><i /></span>
         Menu
       </button>
     </header>

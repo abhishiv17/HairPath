@@ -554,7 +554,7 @@ export default function HairPath() {
   if (!restored) return <div className="flow" />;
 
   return (
-    <div className={`flow ${safeStep === "tryon" || safeStep === "pick" ? "wide" : ""}`}>
+    <div className={`flow ${safeStep === "tryon" || safeStep === "pick" || safeStep === "card" ? "wide" : ""}`}>
       <SiteNav current="/consult" right={<span className="nav-step">Step {stepIdx + 1} of {STEPS.length}</span>} />
       <div
         className="progress"

@@ -90,7 +90,7 @@ export default function Start({ onDone }: { onDone: (photo: PreparedPhoto) => vo
 
   return (
     <main className="flow-main">
-      <div className="kicker"><span>Consultation / 01</span><span>01 / 03</span></div>
+      <div className="kicker"><span>Consultation / 01</span><span>Your photo</span></div>
       <h1 className="display h2 screen-title">Let&apos;s see<br />where you are.</h1>
 
       <ol className="route-v" aria-label="How to take the photo">

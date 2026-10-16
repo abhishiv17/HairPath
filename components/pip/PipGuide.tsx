@@ -36,25 +36,42 @@ export default function PipGuide() {
 
   useEffect(() => setNudging(nudgesOn()), []);
 
-  // Float above a page's sticky action bar (.dock) instead of covering its buttons.
-  const [lift, setLift] = useState(0);
+  // Where Pip stands. With a sticky action bar (.dock) on screen: beside its main button on a phone
+  // (the bar leaves room), above the bar on wider screens. Without one, Pip floats in the corner,
+  // and on a phone tucks into the edge while you scroll down to read, so it never sits on the text.
+  const [dockB, setDockB] = useState<number | null>(null);
+  const [tucked, setTucked] = useState(false);
   useEffect(() => {
     let raf = 0;
+    let lastY = window.scrollY;
+    const phone = () => window.matchMedia("(max-width: 559px)").matches;
     const measure = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        const r = document.querySelector(".dock:not(.flat)")?.getBoundingClientRect();
-        setLift(r && r.top < window.innerHeight && r.bottom > 0 ? Math.round(window.innerHeight - r.top) : 0);
+        const dock = document.querySelector<HTMLElement>(".dock:not(.flat)");
+        const r = dock?.getBoundingClientRect();
+        if (!dock || !r || r.top >= window.innerHeight || r.bottom <= 0) return setDockB(null);
+        if (!phone()) return setDockB(Math.round(window.innerHeight - r.top) + 14);
+        const cta = dock.querySelector(".cta")?.getBoundingClientRect();
+        setDockB(cta && cta.bottom <= window.innerHeight ? Math.round(window.innerHeight - (cta.top + cta.height / 2) - 28) : null);
       });
     };
+    const onScroll = () => {
+      const y = window.scrollY;
+      const atEnd = y + window.innerHeight >= document.documentElement.scrollHeight - 40;
+      if (y > lastY + 6 && y > 160 && !atEnd) setTucked(true);
+      else if (y < lastY - 6 || y < 80 || atEnd) setTucked(false);
+      lastY = y;
+      measure();
+    };
     measure();
-    window.addEventListener("scroll", measure, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", measure);
     const mo = new MutationObserver(measure);
     mo.observe(document.body, { childList: true, subtree: true });
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", measure);
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", measure);
       mo.disconnect();
     };
@@ -150,7 +167,10 @@ export default function PipGuide() {
   const mood = busy ? "think" : nudge ? nudge.mood : guide.mood;
 
   return (
-    <div className="pipg" style={{ "--pipg-lift": `${lift}px` } as React.CSSProperties}>
+    <div
+      className={`pipg ${dockB !== null ? "docked" : tucked && !nudge && !open ? "tucked" : ""}`}
+      style={dockB !== null ? ({ "--pipg-b": `${dockB}px` } as React.CSSProperties) : undefined}
+    >
       {nudge && !open && (
         <div className="pipg-tip" role="status">
           <p>{nudge.text}</p>
