@@ -4,9 +4,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Mascot from "@/components/Mascot";
 import SiteNav from "@/components/route/SiteNav";
-import { deleteAllPlans, deletePlan, listPlans, type SavedPlan } from "@/lib/client/plans";
+import BarberLink from "@/components/share/BarberLink";
+import { deleteAllPlans, deletePlan, listPlans, updatePlan, type SavedPlan } from "@/lib/client/plans";
+import { useAccount } from "@/lib/client/cloud";
+import { getShare, stopShare } from "@/lib/client/share";
+import { useCloudSync } from "@/lib/client/sync";
 
-// MY PLANS: a chronological archive of the user's hair journey, stored on this device only.
+// MY PLANS: a chronological archive of the user's hair journey, stored on this device (and synced when signed in).
 export default function Plans() {
   const [plans, setPlans] = useState<SavedPlan[] | null>(null);
   const [open, setOpen] = useState<{ plan: SavedPlan; url: string } | null>(null);
@@ -16,11 +20,27 @@ export default function Plans() {
   useEffect(() => {
     refresh();
   }, []);
+  useCloudSync(refresh);
+  const acc = useAccount();
+
+  // A shared plan's steps come from the copy the barber sees.
+  const [steps, setSteps] = useState<{ title: string }[]>([]);
+  const shareId = open?.plan.shareId;
+  useEffect(() => {
+    setSteps([]);
+    if (shareId) getShare(shareId).then((r) => r && setSteps(r.plan.chair), () => {});
+  }, [shareId]);
   useEffect(() => () => {
     if (open) URL.revokeObjectURL(open.url);
   }, [open]);
 
   const show = (p: SavedPlan) => setOpen({ plan: p, url: URL.createObjectURL(p.card) });
+  const stop = async (p: SavedPlan) => {
+    await stopShare(p.shareId!);
+    const next = await updatePlan(p.id, { shareId: undefined });
+    if (next && open) setOpen({ ...open, plan: next });
+    refresh();
+  };
   const remove = async (id: string) => {
     await deletePlan(id).catch(() => {});
     setOpen(null);
@@ -64,7 +84,7 @@ export default function Plans() {
     <div className="flow">
       <SiteNav current="/plans" />
       <main className="flow-main" style={{ paddingTop: 18 }}>
-        <div className="kicker"><span>Archive · this device only</span><span>{plans ? String(plans.length).padStart(2, "0") : "··"} routes</span></div>
+        <div className="kicker"><span>{acc.state === "user" ? "Archive · synced" : "Archive · this device"}</span><span>{plans ? String(plans.length).padStart(2, "0") : "··"} routes</span></div>
         <h1 className="display h2 screen-title">My plans</h1>
 
         {plans && plans.length === 0 && (
@@ -87,6 +107,11 @@ export default function Plans() {
             <button className="textbtn" onClick={() => setOpen(null)}>← All routes</button>
             <div className="kicker" style={{ marginTop: 8 }}><span>{open.plan.routeHeadline}</span><span>{new Date(open.plan.createdAt).toLocaleDateString("en-GB")}</span></div>
             <h2 className="display h3" style={{ margin: "6px 0 14px" }}>{open.plan.targetName}</h2>
+            {open.plan.shareId && (
+              <div style={{ marginBottom: 18 }}>
+                <BarberLink shareId={open.plan.shareId} steps={steps} onStop={() => stop(open.plan)} />
+              </div>
+            )}
             <img src={open.url} alt={`Consultation document for ${open.plan.targetName}`} style={{ borderRadius: 18, boxShadow: "0 12px 34px rgba(60, 40, 10, 0.12)" }} />
             {note && <p className="note ok" role="status">{note}</p>}
             <div className="dock">
@@ -111,7 +136,7 @@ export default function Plans() {
                         <span className="mono muted">{String(n).padStart(2, "0")}</span>
                         <span>
                           <span className="display" style={{ fontSize: 26, display: "block" }}>{p.targetName}</span>
-                          <span className="mono accent">{p.routeHeadline}</span>
+                          <span className="mono accent">{p.routeHeadline}{p.shareId ? " · Barber link" : ""}</span>
                           <span className="mini-route"><span>{p.baselineLabel.split(" (")[0]}</span><i /><span>Target</span></span>
                         </span>
                         <img src={p.thumb} alt="" />

@@ -1,10 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { baselineText, cardSummaryText, chairFor, CHEM, GROW, renderCardPng, type CardData } from "@/lib/client/card";
-import { makeThumb, savePlan } from "@/lib/client/plans";
+import { makeThumb, savePlan, updatePlan, type SavedPlan } from "@/lib/client/plans";
+import { cloudConfigured, cloudMessage } from "@/lib/client/cloud";
+import { buildSharedPlan, createShare, stopShare, updateShare } from "@/lib/client/share";
 import Mascot from "@/components/Mascot";
+import BarberLink from "@/components/share/BarberLink";
 import { ROUTE_HEADLINES } from "@/lib/rules";
+import type { SharedPlan } from "@/lib/shared";
 
 type Base = Omit<CardData, "questions" | "note">;
 
@@ -40,7 +44,10 @@ export default function CardView({
   const [note, setNote] = useState("");
   const [png, setPng] = useState<Blob | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState<SavedPlan | null>(null);
+  const [shareId, setShareId] = useState<string | null>(null);
+  const [sharing, setSharing] = useState(false);
+  const shared = useRef<SharedPlan | null>(null);
 
   const full: CardData = useMemo(
     () => ({ ...data, questions: questions.filter((q) => q.on).map((q) => q.text), note }),
@@ -91,25 +98,70 @@ export default function CardView({
       setNotice("Copying isn't available in this browser.");
     }
   };
+  const persist = async (share?: string) => {
+    if (!png) return null;
+    const p = await savePlan({
+      targetName: data.target.name,
+      routeKind: data.route.route,
+      routeHeadline: ROUTE_HEADLINES[data.route.route],
+      baselineLabel: baselineText(data.baseline),
+      textureLabel: data.texture?.term,
+      summary: cardSummaryText(full),
+      card: png,
+      thumb: await makeThumb(data.targetImage || data.sourceImage),
+      shareId: share,
+    });
+    setSaved(p);
+    return p;
+  };
   const save = async () => {
-    if (!png) return;
     try {
-      await savePlan({
-        targetName: data.target.name,
-        routeKind: data.route.route,
-        routeHeadline: ROUTE_HEADLINES[data.route.route],
-        baselineLabel: baselineText(data.baseline),
-        textureLabel: data.texture?.term,
-        summary: cardSummaryText(full),
-        card: png,
-        thumb: await makeThumb(data.targetImage || data.sourceImage),
-      });
-      setSaved(true);
-      setNotice("Saved to My plans on this device.");
+      await persist(shareId ?? undefined);
+      setNotice("Saved to My plans.");
     } catch {
       setNotice("Saving isn't available here (private mode or storage blocked).");
     }
   };
+
+  // The barber link: a read-only copy of this document, kept with the plan in My plans.
+  const createLink = async () => {
+    setSharing(true);
+    setNotice(null);
+    try {
+      const payload = await buildSharedPlan(full);
+      const id = await createShare(payload);
+      shared.current = payload;
+      setShareId(id);
+      try {
+        if (saved) setSaved(await updatePlan(saved.id, { shareId: id }));
+        else await persist(id);
+      } catch {
+        // No on-device storage: the link still works for this session.
+      }
+    } catch (e) {
+      setNotice(cloudMessage(e));
+    }
+    setSharing(false);
+  };
+  const stopLink = async () => {
+    if (!shareId) return;
+    await stopShare(shareId);
+    if (saved) setSaved(await updatePlan(saved.id, { shareId: undefined }).catch(() => saved));
+    shared.current = null;
+    setShareId(null);
+    setNotice("Stopped sharing. The link no longer opens.");
+  };
+  // Edits to the questions or the note reach the barber's copy too.
+  useEffect(() => {
+    const base = shared.current;
+    if (!shareId || !base) return;
+    if (base.note === note.trim() && JSON.stringify(base.questions) === JSON.stringify(full.questions)) return;
+    const t = setTimeout(() => {
+      shared.current = { ...base, questions: full.questions, note: note.trim() };
+      updateShare(shareId, shared.current).catch(() => {});
+    }, 1500);
+    return () => clearTimeout(t);
+  }, [shareId, full.questions, note]);
   const addQuestion = () => {
     const t = custom.trim();
     if (!t) return;
@@ -226,6 +278,32 @@ export default function CardView({
 
       {notice && <p className="note ok" role="status">{notice}</p>}
 
+      {cloudConfigured && chair.length > 0 && (
+        <section style={{ marginTop: 24 }}>
+          {shareId ? (
+            <BarberLink shareId={shareId} steps={chair} onStop={stopLink} />
+          ) : (
+            <div className="jr-cta-card">
+              <Mascot mood="wave" size={84} />
+              <div>
+                <div className="chapter-num" style={{ margin: 0 }}>New · live with your barber</div>
+                <h2 className="display h3" style={{ margin: "4px 0 8px" }}>Send it to your barber</h2>
+                <p className="small">
+                  A link and QR code. Your barber opens it on their phone, with no app or account, and taps <b>Can do</b> or{" "}
+                  <b>Let&apos;s talk</b> on each step. You see their answers here, live.
+                </p>
+                <button className="cta" onClick={createLink} disabled={!png || sharing}>
+                  {sharing ? "Creating link…" : png ? "Create barber link" : "Preparing…"}
+                </button>
+                <p className="tiny muted" style={{ margin: "8px 0 0" }}>
+                  Uploads this document&apos;s text and small previews to HairPath&apos;s cloud until you stop sharing. No account needed.
+                </p>
+              </div>
+            </div>
+          )}
+        </section>
+      )}
+
       {canJourney && (
         <section className="jr-cta-card" style={{ marginTop: 24 }}>
           <Mascot mood="walk" size={84} />
@@ -234,7 +312,7 @@ export default function CardView({
             <h2 className="display h3" style={{ margin: "4px 0 8px" }}>Start this journey</h2>
             <p className="small">
               Turn this plan into a road you track: check-in photos re-measured by YouCam, a haircare routine for your hair
-              with a daily checklist, and trim reminders. Saved on this device only.
+              with a daily checklist, and trim reminders. Saved on this device.
             </p>
             <button className="cta" onClick={startJourney} disabled={starting}>{starting ? "Setting off…" : "Start my journey"}</button>
           </div>
@@ -246,7 +324,7 @@ export default function CardView({
         <div className="btn-row" style={{ marginTop: 6 }}>
           <button className="textbtn" onClick={download} disabled={!png}>Download</button>
           <button className="textbtn" onClick={copyText}>Copy</button>
-          <button className="textbtn" onClick={save} disabled={!png || saved}>{saved ? "Saved ✓" : "Save to My plans"}</button>
+          <button className="textbtn" onClick={save} disabled={!png || Boolean(saved)}>{saved ? "Saved ✓" : "Save to My plans"}</button>
         </div>
       </div>
 
@@ -254,7 +332,7 @@ export default function CardView({
         <div className="kicker"><span>End of session</span></div>
         <p className="small muted" style={{ margin: "6px 0" }}>
           Clears your photos, previews and this document from the page. Saved plans stay on this device until you delete
-          them. HairPath&apos;s server stores none of this.
+          them. HairPath&apos;s server stores none of this, except a barber link while you share one.
         </p>
         <button className="textbtn danger" onClick={onDelete}>Delete session data</button>
       </section>
