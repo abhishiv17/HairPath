@@ -2,6 +2,13 @@
 
 Dated log of work, kept for the hackathon's "work completed during the submission period" requirement (window opens 29 Sep 2026, 12:00 pm ET).
 
+## 2026-10-16
+- **Optional cloud on Supabase** (brief from AbhiShiv: connect Supabase to improve how it feels, without making sign-up mandatory, and make it demo well). Everything stays optional: without the Supabase variables the app is device-only, exactly as before.
+  - **Live barber link.** "Create barber link" on the document uploads a read-only copy (text and small previews) and shows a link and QR code. The barber opens `/b/<id>` with no account, sees the plan in chair language, and taps **Can do / Let's talk / Not yet** per step or sends a note. The client sees "Your barber opened it" and each answer live (Supabase Realtime, with a 10 s polling fallback), and Pip cheers. Edits to the questions and note reach the barber's copy. Shared plans are kept in My plans with their live answers; **Stop sharing** deletes the link and replies. Guests get a silent anonymous session to own the link.
+  - **Optional sign-in and sync.** `/account` with an emailed magic link. Plans and journeys mirror to the cloud for signed-in users (debounced, last write wins, tombstones for deletes) and merge on every device (`lib/merge.ts`). Barber links shared as a guest move to the account on sign-in. "Synced" chip in the nav; "Delete my cloud copy".
+  - **Community pulse.** The server counts a try-on the user picked (not route stages or check-in re-renders, never in mock mode) with the secret key; the grid shows **Popular this week** and "N tried this week", the home page a live counter. Counts only.
+  - Database: `supabase/migrations/0001_hairpath_cloud.sql` with RLS on every table and `security definer` functions for the barber page. Setup guide: `docs/SUPABASE_SETUP.md`. Privacy docs and in-app wording updated (no more "stores nothing" claims where it's no longer true). 4 new tests (56 in total).
+
 ## 2026-10-11
 - **Renamed ManeRoute to HairPath**, and the mascot Rou to **Pip** (from "path"), across the UI, metadata, PWA manifest, card, downloads, calendar file and docs. Plans and journeys saved under the old IndexedDB names are copied into the new ones on first open and the old databases removed (`lib/client/idb.ts`); the remembered Men's/Women's list falls back to its old key. Entries below keep the names used at the time.
 

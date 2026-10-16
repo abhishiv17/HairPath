@@ -90,3 +90,10 @@ A fresh Chrome profile (Playwright, 1366×800) against `npm run dev` in real mod
 
 Also passing: `npm test`, `npm run typecheck`, `NEXT_DIST_DIR=.next-check npm run build`.
 
+
+## Cloud features (Supabase)
+
+`npm run e2e:cloud` drives three browsers at once against a Supabase project (a local `supabase start` works, with mock YouCam):
+the client creates a barber link → the barber opens it and the client sees "opened" live → the barber answers a step and sends a note, and both reach the client live (about 0.5 s locally) → My plans keeps the answers → magic-link sign-in → a laptop signs in and gets the plan and the journey → a new barber answer reaches the laptop live. The sign-in steps read the magic link from the local mail catcher (`MAILPIT_URL`).
+
+Verified on 2026-10-16 against a local Supabase stack with the migration applied: the e2e flow above, plus 36 database checks (row-level security on every table, the barber functions' validation, Realtime delivering replies to the owner only, guest sessions unable to sync, the guest → account hand-over, pulse counts writable only with the secret key, and stop sharing removing the link and replies).
