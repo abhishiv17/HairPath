@@ -4,7 +4,7 @@
 
 HairPath is a mobile-first web app (PWA) built on **10 YouCam AI hair and beard APIs**. You try any cut on your own face, see how far it is from your hair today, and get a plan your barber or stylist can use, in their language. Then HairPath walks the road with you: check-in photos measured by YouCam, a haircare routine built for your hair, trim reminders, and a live link your barber answers from their phone.
 
-Your guide is **Pip**, a lion-cub road-tripper with a sunset mane and a map-pin tail.
+Your guide is **Pip**, a lion-cub road-tripper with a sunset mane and a map-pin tail. Pip waits in the corner of every page with help for the step you're on, speaks up when you seem stuck (an error, a slow render, a long pause), and, when the site has a Groq key, answers questions you type.
 
 > HairPath is a planning tool. Previews are references, not guarantees. It does not predict how fast hair grows, and it is not medical advice.
 
@@ -182,18 +182,21 @@ The barber link, sign-in and pulse are optional. Follow [docs/SUPABASE_SETUP.md]
 | `NEXT_PUBLIC_SUPABASE_URL` | No | Supabase project URL, e.g. `https://xxxx.supabase.co` (no `/rest/v1/`). Turns on the barber link, sign-in/sync and the pulse |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | No | Supabase publishable (or legacy anon) key, safe in the browser |
 | `SUPABASE_SECRET_KEY` | No | Server-only Supabase secret (or legacy service_role) key, used only to record anonymous try-on counts |
+| `GROQ_API_KEY` | No | Server-only. Turns on **Ask Pip anything**: typed questions answered by an AI through Groq. Without it Pip uses its built-in help |
+| `GROQ_MODEL` | No | Groq model for Ask Pip (default `openai/gpt-oss-20b`) |
+| `PIP_MAX_PER_HOUR` | No | Ask Pip questions per IP per hour on a public deployment (default 30) |
 
 ### Deploy (Vercel)
 
 1. Import the repo into Vercel.
-2. Add `YOUCAM_API_KEY`, plus the Supabase variables if you use the cloud features.
+2. Add `YOUCAM_API_KEY`, plus the Supabase variables if you use the cloud features and `GROQ_API_KEY` for Ask Pip.
 3. In Supabase, set the Site URL to your Vercel URL and add `https://<your-domain>/**` to Redirect URLs.
 4. Deploy. `NEXT_PUBLIC_*` values are baked in at build time, so redeploy after changing them. The app is installable as a PWA.
 
 ## Testing
 
 ```bash
-npm test                       # 56 unit tests: route rules, routine rules, journey progress, barber scripts, beard/fringe/colour, hair checks, sync merge, shared-plan checks, calendar, YouCam normalization, errors
+npm test                       # 64 unit tests: Pip's guide and Ask Pip checks, route rules, routine rules, journey progress, barber scripts, beard/fringe/colour, hair checks, sync merge, shared-plan checks, calendar, YouCam normalization, errors
 npm run typecheck
 npm run build                  # NEXT_DIST_DIR=.next-check npm run build works while `npm run dev` is running
 npm run e2e -- --size=phone    # real-browser walk-through with REAL YouCam calls (~7 units)

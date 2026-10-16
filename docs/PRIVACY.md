@@ -48,4 +48,10 @@ Only active when the deployment sets the Supabase variables ([SUPABASE_SETUP.md]
 | **Sync** | The user signs in with an emailed link | Their plans (the document as a ≤ 760 px JPEG) and journeys (with their small check-in pictures), plus their email in Supabase Auth | **Delete my cloud copy** on `/account`; deleting a plan or journey also deletes its cloud copy |
 | **Community pulse** | A real (not mock) try-on the user picked starts | Cut id, day and a count. No user, photo, IP or device | Not personal data |
 
+## Pip, the guide
+
+Pip's built-in help and tips run entirely in the browser. Whether tips can pop up, and which ones were already shown, are kept in this browser's storage.
+
+**Ask Pip anything** appears only when the deployment sets `GROQ_API_KEY`. When the user sends a question, the server forwards to Groq: the question, the last few lines of the chat, the screen they are on and a few facts the screen knows (the cut's name, the length band, the route headline, counts). Never a photo, an email or a name. HairPath stores none of it; Groq handles it under its own terms. The panel says this under the question box, and each AI answer is labelled.
+
 Every table has row-level security; a barber reaches one plan only through its unguessable link id. Full-size photos still go only to YouCam.
