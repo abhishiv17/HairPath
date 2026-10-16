@@ -20,22 +20,23 @@ export function isValidId(v: unknown): v is string {
   return typeof v === "string" && v.length > 0 && v.length <= 256 && /^[A-Za-z0-9+/=_-]+$/.test(v);
 }
 
-// Best-effort per-IP limit on paid task starts, so a public demo URL can't drain YouCam units.
+// Best-effort per-IP limit on paid calls, so a public demo URL can't drain YouCam units (or Groq
+// credits for "Ask Pip"). Each bucket counts separately.
 const WINDOW_MS = 60 * 60 * 1000;
 const MAX_STARTS = Number(process.env.MAX_TASKS_PER_HOUR || 40);
 const hits = new Map<string, number[]>();
 
-export function rateLimited(req: Request): boolean {
+export function rateLimited(req: Request, bucket = "tasks", max = MAX_STARTS): boolean {
   // Only needed for a public deployment; local development runs unrestricted.
   if (process.env.NODE_ENV !== "production") return false;
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "local";
+  const key = `${bucket}|${req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "local"}`;
   const now = Date.now();
-  const recent = (hits.get(ip) || []).filter((t) => now - t < WINDOW_MS);
-  if (recent.length >= MAX_STARTS) {
-    hits.set(ip, recent);
+  const recent = (hits.get(key) || []).filter((t) => now - t < WINDOW_MS);
+  if (recent.length >= max) {
+    hits.set(key, recent);
     return true;
   }
   recent.push(now);
-  hits.set(ip, recent);
+  hits.set(key, recent);
   return false;
 }
