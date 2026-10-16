@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Alegreya_Sans, Luckiest_Guy } from "next/font/google";
 import "./globals.css";
 import SwRegister from "@/components/SwRegister";
+import PipGuide from "@/components/pip/PipGuide";
 
 // Storybook poster: Luckiest Guy is the hand-cut display lettering for headlines;
 // Alegreya Sans is a warm humanist sans for everything you read.
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body>
         {children}
+        <PipGuide />
         <SwRegister />
       </body>
     </html>

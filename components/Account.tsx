@@ -7,12 +7,14 @@ import SiteNav from "@/components/route/SiteNav";
 import { cloudMessage, sendMagicLink, signOut, useAccount } from "@/lib/client/cloud";
 import { deleteCloudCopy } from "@/lib/client/cloudItems";
 import { syncAll, useSyncStatus } from "@/lib/client/sync";
+import { usePipScreen } from "@/lib/client/pip";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // ACCOUNT: optional. Everything works without it; signing in adds sync across devices.
 export default function Account() {
   const acc = useAccount();
+  usePipScreen("account", { signedIn: acc.state === "user" });
   const sync = useSyncStatus();
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState<string | null>(null);

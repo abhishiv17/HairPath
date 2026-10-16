@@ -33,6 +33,7 @@ import CardView from "./flow/CardView";
 import { Lightbox, toFailure, type CheckState, type Preview, type Shelf } from "./flow/shared";
 import type { FinishState } from "./flow/Finish";
 import SiteNav from "./route/SiteNav";
+import { usePipScreen, usePipSituation } from "@/lib/client/pip";
 
 // Flow: start (tips + consent + photo) → pick → try on (compare many) → plan → card.
 // The length check runs in the background while the user browses.
@@ -531,6 +532,24 @@ export default function HairPath() {
 
   const stepIdx = STEPS.indexOf(safeStep);
   const tryList = tried.map((id) => ({ styleId: id, preview: looks[id] ?? ({ state: "idle" } as Preview) }));
+
+  // Pip, the guide: which step this is, what it can mention, and anything going wrong or slow.
+  const focusId = safeStep === "plan" || safeStep === "card" ? planId : safeStep === "tryon" ? activeId : selected;
+  const activeLook = activeId ? looks[activeId] : undefined;
+  usePipScreen(safeStep, {
+    cut: focusId ? getStyle(focusId)?.name : undefined,
+    length: baseline ? baselineText(baseline).split(" (")[0] : undefined,
+    route: safeStep === "plan" || safeStep === "card" ? route?.headline : undefined,
+    tried: tried.length,
+  });
+  usePipSituation(
+    "consult",
+    safeStep === "pick"
+      ? length.state === "error" ? "length-error" : length.state === "timeout" ? "length-slow" : length.state === "running" ? "length-running" : null
+      : safeStep === "tryon"
+        ? activeLook?.state === "error" ? "render-error" : activeLook?.state === "timeout" ? "render-slow" : activeLook?.state === "running" ? "render-running" : null
+        : null,
+  );
 
   if (!restored) return <div className="flow" />;
 

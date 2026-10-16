@@ -5,6 +5,7 @@ import CameraCapture from "@/components/CameraCapture";
 import Mascot from "@/components/Mascot";
 import Interrupt from "@/components/route/Interrupt";
 import { CaptureError, preparePhoto, type PreparedPhoto } from "@/lib/client/image";
+import { usePipSituation } from "@/lib/client/pip";
 
 // CONSULTATION / 01: a measurement studio. Tips, consent, then camera or upload.
 export default function Start({ onDone }: { onDone: (photo: PreparedPhoto) => void }) {
@@ -14,6 +15,7 @@ export default function Start({ onDone }: { onDone: (photo: PreparedPhoto) => vo
   const [photo, setPhoto] = useState<PreparedPhoto | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [camNote, setCamNote] = useState<string | null>(null);
+  usePipSituation("start", error ? "photo-error" : camNote ? "camera-off" : null);
 
   const onFallback = useCallback((reason: string) => {
     setCamera(false);

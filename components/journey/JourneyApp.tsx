@@ -7,6 +7,7 @@ import SiteNav from "@/components/route/SiteNav";
 import { CompareSlider, Lightbox, zoom } from "@/components/flow/shared";
 import { deleteJourney, listJourneys, putJourney } from "@/lib/client/journeys";
 import { useCloudSync } from "@/lib/client/sync";
+import { usePipScreen } from "@/lib/client/pip";
 import { buildIcs } from "@/lib/ics";
 import {
   BAND_SHORT,
@@ -66,6 +67,10 @@ export default function JourneyApp() {
   );
 
   const journey = list?.find((j) => j.id === id) ?? null;
+  usePipScreen(!list || journey ? (view.at === "checkin" ? "checkin" : "journey") : "journey-empty", {
+    journeyTo: journey?.targetName,
+    checkins: journey?.checkins.length,
+  });
 
   /** Applies a change to the latest copy of a journey, shows it at once, then stores it. */
   const update = useCallback((jid: string, fn: (j: Journey) => Journey) => {

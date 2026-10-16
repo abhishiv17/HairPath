@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePipHidden } from "@/lib/client/pip";
 
 // Live camera capture with a framing guide. Works on laptops (webcam) and phones (front camera).
 // Needs a secure context (https or localhost). Falls back to file upload on any failure.
@@ -27,6 +28,7 @@ const PROMPTS: Record<Pose, string> = {
 };
 
 export default function CameraCapture({ onCapture, onCancel, onFallback, pose = "front", autoTimer = false }: Props) {
+  usePipHidden("camera"); // Pip steps aside so nothing covers the shutter
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);

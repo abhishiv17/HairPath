@@ -985,3 +985,87 @@ button.road-img:hover img { transform: scale(1.04); }
 .nav-acct { margin-left: auto; }
 .nav-acct + .menu-btn { margin-left: 0; }
 @media (min-width: 900px) { .nav-acct { margin-left: 0; } }
+
+/* ================= Pip, the guide (every page) ================= */
+.pipg { --pipg-b: calc(max(16px, env(safe-area-inset-bottom)) + var(--pipg-lift, 0px)); --pipg-r: max(16px, env(safe-area-inset-right)); }
+.pipg-fab {
+  position: fixed; right: var(--pipg-r); bottom: var(--pipg-b); z-index: 55;
+  display: inline-flex; align-items: center; gap: 4px; height: 48px; padding: 0 16px 0 4px; border: 0; border-radius: 999px;
+  background: var(--paper); color: var(--ink); font-weight: 800; font-size: 15px;
+  box-shadow: 0 0 0 3px var(--route), 0 10px 26px rgba(15, 42, 39, 0.3);
+  transition: bottom 0.25s var(--ease), transform 0.15s var(--ease);
+}
+.pipg-fab .mascot { margin-top: -14px; }
+.pipg-fab:hover { transform: translateY(-2px); }
+.pipg-fab:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+.pipg-fab.calling { animation: pip-hop 0.7s var(--ease) 3; }
+/* Phones: just Pip in a round badge, so less of the page is covered. */
+@media (max-width: 559px) {
+  .pipg-fab { width: 56px; height: 56px; padding: 0; justify-content: center; }
+  .pipg-fab .mascot { margin-top: -10px; }
+  .pipg-fab-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .pipg-tip { bottom: calc(var(--pipg-b) + 70px); }
+}
+
+.pipg-tip {
+  position: fixed; right: var(--pipg-r); bottom: calc(var(--pipg-b) + 66px); z-index: 55;
+  width: max-content; max-width: min(300px, calc(100vw - 32px)); padding: 12px 14px 10px;
+  background: var(--paper); color: var(--ink); border-radius: 18px 18px 6px 18px;
+  box-shadow: 0 0 0 2px var(--line), 0 12px 28px rgba(15, 42, 39, 0.25);
+  animation: pipg-in 0.4s var(--ease);
+}
+.pipg-tip p { margin: 0 0 8px; font-size: 16px; line-height: 1.35; }
+.pipg-tip-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pipg-tip-go { min-height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: var(--route); color: #1e2420; font-weight: 800; font-size: 15px; }
+@keyframes pipg-in { from { opacity: 0; transform: translateY(10px) scale(0.96); } to { opacity: 1; transform: none; } }
+
+.pipg-x { flex: none; width: 40px; height: 40px; border: 0; border-radius: 50%; background: transparent; color: inherit; font-size: 26px; line-height: 1; }
+.pipg-x:hover { background: rgba(127, 127, 127, 0.15); }
+
+.pipg-panel {
+  position: fixed; z-index: 56; right: var(--pipg-r); bottom: calc(var(--pipg-b) + 64px);
+  width: min(390px, calc(100vw - 32px)); max-height: min(72dvh, 640px);
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--paper); color: var(--ink); border-radius: 22px;
+  box-shadow: 0 0 0 3px var(--route), 0 18px 44px rgba(15, 42, 39, 0.35);
+  animation: pipg-in 0.35s var(--ease);
+}
+.pipg-panel:focus { outline: none; }
+@media (max-width: 559px) {
+  .pipg-panel { left: 0; right: 0; bottom: 0; width: 100%; max-height: 80dvh; border-radius: 22px 22px 0 0; padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -3px 0 var(--route), 0 -12px 40px rgba(15, 42, 39, 0.35); }
+}
+.pipg-head { display: flex; align-items: center; gap: 10px; padding: 10px 10px 10px 14px; background: var(--teal); color: var(--on-teal); }
+.pipg-head .mascot { margin: -6px 0 -10px; }
+.pipg-who { flex: 1; min-width: 0; display: grid; }
+.pipg-who b { font-weight: 400; font-size: 24px; line-height: 1; }
+.pipg-who span { font-size: 13.5px; opacity: 0.85; }
+
+.pipg-body { flex: 1; min-height: 90px; overflow-y: auto; padding: 14px; display: grid; gap: 10px; align-content: start; }
+.pipg-say, .pipg-line p { margin: 0; padding: 10px 12px; font-size: 16px; line-height: 1.4; white-space: pre-line; border-radius: 4px 16px 16px 16px; background: var(--bg); }
+.pipg-say { box-shadow: inset 3px 0 0 var(--route); }
+.pipg-line { display: grid; max-width: 88%; }
+.pipg-line.from-you { justify-self: end; }
+.pipg-line.from-you p { background: var(--teal); color: var(--on-teal); border-radius: 16px 4px 16px 16px; }
+.pipg-line.failed p { background: transparent; box-shadow: inset 0 0 0 2px var(--line); color: var(--muted); }
+.pipg-ai { margin-top: 3px; font-size: 12px; color: var(--muted); }
+.pipg-dots { display: inline-flex; gap: 5px; }
+.pipg-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: pipg-dot 1s ease-in-out infinite; }
+.pipg-dots i:nth-child(2) { animation-delay: 0.15s; }
+.pipg-dots i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes pipg-dot { 0%, 100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-3px); } }
+
+.pipg-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 14px; border-top: 2px dashed var(--line-soft); }
+.pipg-chips button { min-height: 36px; padding: 4px 12px; border: 2px solid var(--line); border-radius: 999px; background: var(--paper); font-weight: 700; font-size: 14.5px; text-align: left; }
+.pipg-chips button:hover { border-color: var(--route); }
+
+.pipg-ask { display: flex; gap: 8px; padding: 0 14px 10px; }
+.pipg-ask input { flex: 1; min-width: 0; min-height: 44px; padding: 0 12px; border: 2px solid var(--line); border-radius: var(--r-sm); background: var(--bg); font-size: 16px; }
+.pipg-ask input:focus { outline: none; border-color: var(--route); }
+.pipg-ask button { flex: none; width: 46px; min-height: 44px; border: 0; border-radius: var(--r-sm); background: var(--route); color: #1e2420; font-size: 20px; font-weight: 800; }
+.pipg-ask button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.pipg-foot { padding: 8px 14px 12px; border-top: 2px dashed var(--line-soft); color: var(--muted); }
+.pipg-foot .check { font-size: 14.5px; align-items: center; }
+.pipg-foot .check input { width: 18px; height: 18px; margin: 0; }
+.pipg-note { margin: 6px 0 0; font-size: 12.5px; }
+@media print { .pipg { display: none; } }
