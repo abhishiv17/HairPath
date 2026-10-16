@@ -233,11 +233,11 @@ export default function HairPath() {
     [ensureUpload, photo],
   );
 
-  const tryLook = (id: string, task?: string) => runImage(id, setLooks, (f) => startVto(f, id), pollVto, task);
+  const tryLook = (id: string, task?: string, count = false) => runImage(id, setLooks, (f) => startVto(f, id, count), pollVto, task);
   const growLook = (len: GrowOutLength, task?: string) => runImage(len, setGrow, (f) => startExtend(f, len), pollExtend, task);
 
   const showLook = (id: string) => {
-    if (!looks[id] || looks[id].state === "error") tryLook(id);
+    if (!looks[id] || looks[id].state === "error") tryLook(id, undefined, !looks[id]);
     if (!tried.includes(id)) setTried((t) => [...t, id]);
     setActiveId(id);
   };

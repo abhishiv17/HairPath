@@ -43,11 +43,12 @@ export const startLength = (fileId: string) =>
     body: JSON.stringify({ fileId }),
   });
 
-export const startVto = (fileId: string, styleId: string) =>
+/** `count`: the user picked this cut to try, so it counts towards the community pulse. */
+export const startVto = (fileId: string, styleId: string, count = false) =>
   request<{ taskId: string }>("/api/vto", {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ fileId, styleId }),
+    body: JSON.stringify({ fileId, styleId, count }),
   });
 
 export type PollOutcome<T> =

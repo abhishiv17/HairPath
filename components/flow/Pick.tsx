@@ -5,6 +5,7 @@ import { getStyle, stylesIn, thumbFor } from "@/lib/catalog";
 import { LENGTH_BANDS, type HairBaseline, type LengthBand, type TargetStyle } from "@/lib/types";
 import type { PreparedPhoto } from "@/lib/client/image";
 import type { ApiFailure } from "@/lib/client/api";
+import { usePulse } from "@/lib/client/pulse";
 import Measure, { distanceLabel } from "@/components/route/Measure";
 import { LengthSilhouette, type CheckState, type Shelf } from "./shared";
 
@@ -126,6 +127,7 @@ export default function Pick({
 }) {
   const baseline = length.state === "done" ? length.baseline : null;
   const style = selected ? getStyle(selected) : undefined;
+  const pulse = usePulse();
   const cur = baseline ? LENGTH_BANDS.indexOf(baseline.lengthBand) : -1;
 
   const visible = shelf ? stylesIn(shelf).filter((s) => band === "any" || s.targetLengthBand === band) : [];
@@ -155,6 +157,15 @@ export default function Pick({
         ]
       : LENGTH_BANDS.map((b) => ({ key: b, title: BAND_SHORT[b], caption: "", styles: visible.filter((s) => s.targetLengthBand === b) }))
   ).filter((g) => g.styles.length);
+
+  // Community pulse: the cuts HairPath users tried most in the last 7 days, within this list.
+  const trending = shelf && pulse
+    ? stylesIn(shelf)
+        .map((s) => ({ s, week: pulse.get(s.id)?.week ?? 0 }))
+        .filter((x) => x.week > 0)
+        .sort((a, b) => b.week - a.week)
+        .slice(0, 8)
+    : [];
 
   return (
     <main className="flow-main">
@@ -195,6 +206,28 @@ export default function Pick({
         </p>
       )}
 
+      {trending.length >= 2 && (
+        <section className="cut-group" aria-label="Popular this week">
+          <div className="cut-group-head">
+            <h2 className="display cut-group-title">Popular this week</h2>
+            <span className="mono muted">Live · HairPath</span>
+          </div>
+          <p className="cut-group-caption">The cuts people tried on most in the last 7 days. Counts only: nobody&apos;s photo or name.</p>
+          <div className="pulse-row">
+            {trending.map(({ s, week }, i) => (
+              <button key={s.id} className="pulse-card" aria-pressed={selected === s.id} onClick={() => setSelected(s.id)}>
+                <span className="pulse-rank">
+                  {thumbFor(s, shelf!) && <img src={thumbFor(s, shelf!)!} alt="" loading="lazy" />}
+                  <i>#{i + 1}</i>
+                </span>
+                <b>{s.name}</b>
+                <span>{week} {week === 1 ? "try-on" : "try-ons"}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
       {groups.map((g) => (
         <section key={g.key} className="cut-group" aria-label={g.title}>
           <div className="cut-group-head">
@@ -212,6 +245,9 @@ export default function Pick({
               tags.push({ text: `${s.maintenance} upkeep`, cls: s.maintenance === "low" ? "on" : undefined });
               if (s.requiresStylistConfirmation) tags.push({ text: "Ask first", cls: "warn" });
               if (s.sideEffects.length) tags.push({ text: `Template ${s.sideEffects[0]}` });
+              const tries = pulse?.get(s.id);
+              if (tries?.week) tags.unshift({ text: `${tries.week} tried this week`, cls: "hot" });
+              else if (tries?.total) tags.push({ text: `${tries.total} tried` });
               return (
                 <button
                   key={s.id}

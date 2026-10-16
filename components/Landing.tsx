@@ -5,6 +5,8 @@ import SiteNav from "@/components/route/SiteNav";
 import Scene from "@/components/route/Scene";
 import ChapterRail from "@/components/route/ChapterRail";
 import HereThere from "@/components/route/HereThere";
+import LivePulse from "@/components/LivePulse";
+import { cloudConfigured as cloud } from "@/lib/cloudConfig";
 
 // Home page: told like a picture book. A painted road to the horizon, then short chapters.
 // Static: no photo is taken here.
@@ -50,7 +52,8 @@ export default function Landing() {
             progress, and a haircare routine built for your hair.
           </p>
           <Link href="/consult" className="cta">Start your route</Link>
-          <p className="hero-note">First try-on in about a minute · No account</p>
+          <p className="hero-note">First try-on in about a minute · No account needed</p>
+          <LivePulse />
         </div>
         <div className="hero-pip"><Mascot mood="wave" size={150} title="Pip, the HairPath guide, waving from the road" /></div>
       </section>
@@ -93,7 +96,7 @@ export default function Landing() {
             <li>
               <span className="stop-pin">4</span>
               <h3 className="display">Start the journey</h3>
-              <p>Take a card to your barber, then track the road: check-ins, your routine and trim reminders.</p>
+              <p>{cloud ? "Send your barber a live link they answer from their phone" : "Take a card to your barber"}, then track the road: check-ins, your routine and trim reminders.</p>
             </li>
           </ol>
         </div>
@@ -196,9 +199,9 @@ export default function Landing() {
           <p className="chapter-num">Chapter six</p>
           <h2 className="display h2">Your photo stays yours</h2>
           <ul className="fact-cards on-dark">
-            <li><h4 className="display">Sent only to YouCam</h4><p>For the analysis and try-ons. HairPath&apos;s server stores nothing.</p></li>
-            <li><h4 className="display">Kept on your device</h4><p>Your session, plans, journeys and check-in photos live in your browser. One tap deletes them.</p></li>
-            <li><h4 className="display">No account, no tracking</h4><p>No sign-up, no analytics, no guesses about gender, ethnicity or health.</p></li>
+            <li><h4 className="display">Sent only to YouCam</h4><p>For the analysis and try-ons. HairPath never stores your full-size photo.</p></li>
+            <li><h4 className="display">Kept on your device</h4><p>{cloud ? "Your session, plans, journeys and check-in photos live in your browser. Small previews go to HairPath's cloud only if you sign in to sync or send a barber link, and you can delete them." : "Your session, plans, journeys and check-in photos live in your browser. One tap deletes them."}</p></li>
+            <li><h4 className="display">{cloud ? "Account optional" : "No account, no tracking"}</h4><p>{cloud ? "Sign in only to sync your devices. No analytics: the only count is anonymous try-ons per cut. No guesses about gender, ethnicity or health." : "No sign-up, no analytics, no guesses about gender, ethnicity or health."}</p></li>
             <li><h4 className="display">Said plainly</h4><p>YouCam keeps processed files for up to 30 days under its own policy.</p></li>
           </ul>
         </div>
@@ -209,10 +212,17 @@ export default function Landing() {
           <p className="chapter-num">Before you set off</p>
           <h2 className="display h2">Questions</h2>
           <details><summary>Is this a haircut filter?</summary><p>No. The try-on is the start. The point is the distance from your hair now, the route, and the card you take to your appointment.</p></details>
-          <details><summary>How does tracking work?</summary><p>Start a journey from your consultation. Every few weeks, take one new photo: YouCam measures your length band again, renders your destination on the new photo, and Pip moves along the road when your length changes. Log your cuts, tick off your routine, and add the reminders to your calendar. It all stays on your device.</p></details>
+          <details><summary>How does tracking work?</summary><p>Start a journey from your consultation. Every few weeks, take one new photo: YouCam measures your length band again, renders your destination on the new photo, and Pip moves along the road when your length changes. Log your cuts, tick off your routine, and add the reminders to your calendar. It stays on your device unless you sign in to sync.</p></details>
           <details><summary>Why no millimetres or “weeks to grow”?</summary><p>YouCam measures length as one of five visible bands, and growth speed differs for everyone. HairPath shows the real bands and the distance between them instead of inventing numbers.</p></details>
           <details><summary>What is the texture check?</summary><p>Two extra photos with your head turned. YouCam Hair Type Detection reads your natural texture, which changes the advice for wavy, curly and sleek looks. It&apos;s optional and only offered when a look depends on texture.</p></details>
-          <details><summary>Where are my saved plans?</summary><p>Only in this browser on this device. They are never uploaded.</p></details>
+          {cloud ? (
+            <>
+              <details><summary>What is the barber link?</summary><p>From your consultation document, create a link or QR code. Your barber opens it on their phone, with no app or account, and taps Can do, Let&apos;s talk or Not yet on each step, or leaves you a note. You see the answers on your phone as they tap. Stop sharing whenever you like and the link stops working.</p></details>
+              <details><summary>Where are my saved plans?</summary><p>In this browser on this device. If you sign in (optional, with an emailed link), they also sync to your other devices.</p></details>
+            </>
+          ) : (
+            <details><summary>Where are my saved plans?</summary><p>Only in this browser on this device. They are never uploaded.</p></details>
+          )}
           <details><summary>Does it work on a laptop?</summary><p>Yes, with your webcam or an uploaded photo. On a phone it uses the front camera.</p></details>
         </div>
       </section>

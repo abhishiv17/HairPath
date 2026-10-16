@@ -108,8 +108,8 @@ export default function Start({ onDone }: { onDone: (photo: PreparedPhoto) => vo
       <label className="check consent">
         <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
         <span>
-          Send my photo to YouCam (Perfect Corp.) to analyse my hair and make try-ons. HairPath stores nothing on its
-          servers; YouCam keeps processed files for up to 30 days. <a href="/#privacy" target="_blank" rel="noreferrer">Privacy</a>
+          Send my photo to YouCam (Perfect Corp.) to analyse my hair and make try-ons. HairPath doesn&apos;t keep
+          your photo; YouCam keeps processed files for up to 30 days. <a href="/#privacy" target="_blank" rel="noreferrer">Privacy</a>
         </span>
       </label>
 
