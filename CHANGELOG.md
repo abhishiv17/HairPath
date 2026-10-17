@@ -2,6 +2,9 @@
 
 Dated log of work, kept for the hackathon's "work completed during the submission period" requirement (window opens 29 Sep 2026, 12:00 pm ET).
 
+## 2026-10-18
+- **Submission prep:** MIT `LICENSE`; the live URL (https://hair-path-youcam.vercel.app) and the HairPath repo link in the README, Devpost draft and video description; `docs/SUBMISSION.md` brought up to date with the barber link, sync, pulse, Pip and 64 tests, plus the 11 and 16 Oct work; the architecture diagram lists every API route and the optional Supabase cloud.
+
 ## 2026-10-16
 - **UI pass on buttons and layout** (brief from AbhiShiv: the sign-in and other buttons looked poor; go through the whole app). Nav: one width on every page, a proper account button (icon, or your initial when synced), a menu button with an icon, no more wrapping tagline or "Step 1 of 5" pill. Disabled buttons are a calm neutral instead of faded orange (muddy brown in dark mode). The sticky action bar is frosted, runs edge to edge on desktop with its buttons centred, and its secondary actions (Retake, Download, Copy…) are real buttons instead of underlined text. On phones Pip sits beside the main button (the bar keeps a seat) and tucks into the screen edge while you scroll down to read. The document page uses the full width on desktop, with the barber link and journey side by side. The length filters fade at the edge to show they scroll; the photo step drops its confusing "01 / 03".
 - **Pip becomes a guide on every page** (brief from AbhiShiv: the mascot should feel like it's there to help and guide the user when needed).

@@ -11,16 +11,23 @@ Next.js 16 route handlers (server only, holds YOUCAM_API_KEY)
   ├─ GET  /api/length/:task   poll + normalise → HairBaseline
   ├─ POST /api/vto            catalog style id → template_id → start hair-transfer task
   ├─ GET  /api/vto/:task      poll → download result server-side → data URL
-  └─ GET  /api/health         configured? mock? (never the key)
+  ├─ POST/GET /api/texture, /api/hair-check   Hair Type, Frizziness and Density Detection
+  ├─ POST/GET /api/extend     Hair Extension ("your hair, grown")
+  ├─ POST/GET /api/finish     beard, bangs and colour on top of the try-on
+  ├─ GET  /api/health         configured? mock? (never the key)
+  └─ POST /api/pip            Ask Pip through Groq (optional, text only)
   ▼
 YouCam S2S API  https://yce-api-01.makeupar.com
+
+Optional: browser ⇄ Supabase (publishable key + RLS) for the barber link, sign-in/sync and Realtime;
+the server writes try-on counts with the secret key. See SUPABASE_SETUP.md.
 ```
 
 ## Key decisions
 
 | Decision | Why |
 | --- | --- |
-| **Stateless server** (no database, no sessions) | Nothing sensitive to store or leak, and it runs on serverless platforms (Vercel) without sticky sessions. The client holds `fileId` and task ids, which are useless without the key. |
+| **Stateless server** (no sessions; the only database is the optional Supabase cloud) | Nothing sensitive to store or leak, and it runs on serverless platforms (Vercel) without sticky sessions. The client holds `fileId` and task ids, which are useless without the key. Barber links and sync go from the browser to Supabase under row-level security, not through HairPath's server. |
 | **Polling, not webhooks** | Webhooks need a public HTTPS callback and signature handling, while polling works on localhost and on judges' devices. The client polls every 2.5–3.5 s; the server makes one YouCam GET per poll. |
 | **Client-side resize to JPG ≤ 1024 px** | Hairstyle VTO accepts only JPG with the long side at most 1024 px, and Hair Length needs at least 320 px per side. One prepared photo satisfies both, and uploads stay small (~100–250 KB). |
 | **Server re-checks the image header** | It rejects non-JPEG and wrong sizes before spending units (`lib/server/image.ts`, no image library needed). |

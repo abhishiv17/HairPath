@@ -9,5 +9,6 @@ next-env.d.ts
 tests/e2e/shots/
 .next-check/
 .next-mock/
+.next-sb/
 *.tsbuildinfo
 scripts/missing-thumbs.json

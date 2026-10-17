@@ -2,7 +2,7 @@
 
 **From the hair you have to the hair you want.**
 
-HairPath is a mobile-first web app (PWA) built on **10 YouCam AI hair and beard APIs**. You try any cut on your own face, see how far it is from your hair today, and get a plan your barber or stylist can use, in their language. Then HairPath walks the road with you: check-in photos measured by YouCam, a haircare routine built for your hair, trim reminders, and a live link your barber answers from their phone.
+HairPath is a mobile-first web app (PWA) built on **9 YouCam AI hair and beard APIs** plus the File API. You try any cut on your own face, see how far it is from your hair today, and get a plan your barber or stylist can use, in their language. Then HairPath walks the road with you: check-in photos measured by YouCam, a haircare routine built for your hair, trim reminders, and a live link your barber answers from their phone.
 
 Your guide is **Pip**, a lion-cub road-tripper with a sunset mane and a map-pin tail. Pip waits in the corner of every page with help for the step you're on, speaks up when you seem stuck (an error, a slow render, a long pause), and, when the site has a Groq key, answers questions you type.
 
@@ -18,7 +18,7 @@ Your guide is **Pip**, a lion-cub road-tripper with a sunset mane and a map-pin 
 
 | | |
 | --- | --- |
-| **Live demo** | ‹add the Vercel URL› (no login needed) |
+| **Live demo** | https://hair-path-youcam.vercel.app (no login needed) |
 | **Demo video** | ‹add the YouTube link› |
 | **Platform** | Mobile web (PWA) on a phone; also works on a laptop with a webcam |
 | **YouCam APIs** | Hair Length Detection, Hair Type Detection, Hair Frizziness Detection, Hair Density Detection, Hairstyle Virtual Try-On, Hair Extension, Beard Style Generator, Bangs, Hair Color, plus the File API |
@@ -111,7 +111,7 @@ The [official rules](https://youcam-api-skin-ai-ecommerce.devpost.com/rules) ask
 | Rule | How HairPath meets it |
 | --- | --- |
 | **What to create:** a working application that integrates at least one YouCam API and shows clear consumer or eCommerce value | 10 YouCam endpoints, all from the **Hair & Beard** category the judging criteria name. Consumer value: people know before the appointment whether their hair is ready, what to ask for at each visit, and how to care for it while it grows. Retail value: salons and barbers get a client who arrives with a plan, and the routine names product types to buy at each stage |
-| **Functionality:** installs and runs consistently on its intended platform, and works as shown in the video and description | A PWA for phones, also usable on a laptop. CI runs typecheck, 56 unit tests and a production build on every push. `npm run e2e` walks the whole flow in a real browser with real YouCam calls, and `npm run e2e:cloud` drives a client phone, a barber phone and a laptop at the same time. Every YouCam error code maps to a plain-language fix |
+| **Functionality:** installs and runs consistently on its intended platform, and works as shown in the video and description | A PWA for phones, also usable on a laptop. CI runs typecheck, 64 unit tests and a production build on every push. `npm run e2e` walks the whole flow in a real browser with real YouCam calls, and `npm run e2e:cloud` drives a client phone, a barber phone and a laptop at the same time. Every YouCam error code maps to a plain-language fix |
 | **New and existing:** newly created, or significantly updated after the submission period starts, with an explanation | A first MVP was built on 28 Sep 2026, before the window opened. Everything since 29 Sep is logged by date in [CHANGELOG.md](CHANGELOG.md): the rebuilt flow, the journey, 7 more YouCam APIs, finish-the-look, the hair check, the live barber link, sync and the community pulse |
 | **Third-party integrations:** must be authorized under each tool's terms or licence | YouCam APIs under YouCam's and Perfect Corp.'s Terms of Service. Supabase (optional) on its free plan. Open-source packages under their own licences (Next.js, React, `@supabase/supabase-js`, `qrcode`). Fonts (Alegreya Sans, Luckiest Guy) from Google Fonts under open licences. See [Third-party assets](#third-party-assets) |
 
@@ -119,7 +119,7 @@ The [official rules](https://youcam-api-skin-ai-ecommerce.devpost.com/rules) ask
 
 | Rule | How HairPath meets it |
 | --- | --- |
-| **Code repository** with all source, assets and instructions, public with relevant licensing or private and shared with contact_event@PerfectCorp.com | This repo holds all source, the catalog assets, the database migration and the setup steps below. ‹A LICENSE file still has to be added before submission› |
+| **Code repository** with all source, assets and instructions, public with relevant licensing or private and shared with contact_event@PerfectCorp.com | This repo holds all source, the catalog assets, the database migration and the setup steps below. Public under the [MIT licence](LICENSE) |
 | **Text description** of features, functionality and consumer or eCommerce value | [docs/SUBMISSION.md](docs/SUBMISSION.md), ready to paste into Devpost |
 | **Demo video, 1–3 minutes,** end to end, explaining the YouCam APIs used, showing the app on its intended device, public on YouTube or Vimeo, with no third-party trademarks or copyrighted music | Planned in [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md): recorded on a phone, naming each YouCam API as it appears, no music or logos that need permission |
 | **Testing access,** free and without restriction until judging ends | The live demo needs no login or account. Sign-in is optional and only adds sync. Judges can also run it locally for free with `YOUCAM_MOCK=1` |
@@ -210,7 +210,7 @@ CI (`.github/workflows/ci.yml`) runs typecheck, tests and build on every push. M
 ```
 app/
   page.tsx · consult/ · journey/ · plans/ · account/ · b/[id]/ (barber page) · not-found.tsx
-  api/                    photo · length · texture · vto · extend · health (server-only YouCam calls)
+  api/                    photo · length · texture · hair-check · vto · extend · finish · health (server-only YouCam calls) · pip (Ask Pip)
 components/
   Landing.tsx             home page, told in picture-book chapters
   HairPath.tsx            the consultation flow (state, history, refresh-safe session)
@@ -263,3 +263,7 @@ Next.js 16 · React 19 · TypeScript · YouCam AI APIs · Supabase (Postgres + R
 - **Code.** Open-source npm packages under their own licences; see `package.json`.
 
 There are no other third-party images, logos or music.
+
+## License
+
+HairPath's code is released under the [MIT licence](LICENSE). YouCam images keep their own terms (see above).

@@ -39,4 +39,4 @@ If anything fails during recording, cut it. Never show a feature as working when
 
 ## Title and description for YouTube
 **Title:** HairPath: from the hair you have to the hair you want (YouCam API Hackathon)
-**Description:** A 2-minute demo of HairPath, a mobile web app that plans the route from your hair today to the cut you want, and tracks the journey. Built with YouCam AI Hair Length Detection, Hairstyle Virtual Try-On, Hair Extension and Hair Type Detection. ‹live URL› · https://github.com/abhishiv17/ManeRoute-
+**Description:** A 2-minute demo of HairPath, a mobile web app that plans the route from your hair today to the cut you want, and tracks the journey. Built with nine YouCam AI APIs: Hair Length Detection, Hairstyle Virtual Try-On, Hair Extension, Beard Style Generator, Bangs, Hair Color, Hair Type Detection, Hair Frizziness Detection and Hair Density Detection. Live barber links and sync run on Supabase. Try it: https://hair-path-youcam.vercel.app · Code: https://github.com/abhishiv17/HairPath
