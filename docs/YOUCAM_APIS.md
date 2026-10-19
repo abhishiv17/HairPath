@@ -83,12 +83,13 @@ The collection is chosen by the user. HairPath never infers gender or any other 
 ## 5. AI Hair Type Detection v1.0 (texture scan)
 
 ```http
-POST /s2s/v2.0/task/hair-type-detection   { "src_file_ids": ["<front>", "<head turned right>", "<head turned left>"] }
+POST /s2s/v2.0/task/hair-type-detection   { "src_file_ids": ["<front>", "<head turned to the user's left>", "<head turned to the user's right>"] }
 GET  /s2s/v2.0/task/hair-type-detection/{task_id}
 → { "data": { "task_status": "success", "results": { "hair_type": { "mapping": "2a to 2b", "term": "Slight to Medium Wavy" } } } }
 ```
 
 - All three photos must be **the same size**. HairPath crops every capture to 640 × 800 on the device.
+- Side order is the user's left, then right (photos un-mirrored, as a camera takes them). The other order returns `error_face_angle_invalid` even with good side photos (checked 19 Oct 2026; the same order works for frizz).
 - Side photos must be turned more than 15°. Sending the front photo three times returns `error_face_angle_invalid` (checked 28 Sep 2026), so the app runs a guided, hands-free 3-second shot for each side.
 - The nine documented ranges map to straight / wavy / curly / coily (`lib/texture.ts`). Unknown values count as "not scanned".
 - Cost: 2 units. Failure is non-blocking: the user can continue without texture or retake the side photos.
@@ -139,7 +140,7 @@ GET  /s2s/v2.0/task/hair-color/{task_id}  → results.url  (returned as PNG)
 ## 10. AI Hair Frizziness Detection (part of the hair check)
 
 ```http
-POST /s2s/v2.0/task/hair-frizziness-detection   { "src_file_ids": ["<front>", "<left>", "<right>"] }
+POST /s2s/v2.0/task/hair-frizziness-detection   { "src_file_ids": ["<front>", "<head turned to the user's left>", "<head turned to the user's right>"] }
 GET  /s2s/v2.0/task/hair-frizziness-detection/{task_id}
 → results.hair_frizziness = { "term": "Not Frizzy" | "Slightly Frizzy" | "Frizzy" | "Extreme Frizzy", "mapping": 0–3 }
 ```

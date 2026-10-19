@@ -364,8 +364,9 @@ export default function HairPath() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stageKey, route?.growOut, safeStep]);
 
-  // The hair check: texture (front, right, left), frizz (front, left, right) and, with the
-  // lowered-head photo, density. Frizz and density never block the texture result.
+  // The hair check: texture and frizz (both front, then head turned to the user's left, then right:
+  // checked with live calls on 19 Oct 2026, the other order returns error_face_angle_invalid) and,
+  // with the lowered-head photo, density. Frizz and density never block the texture result.
   const onScan = async (right: PreparedPhoto, left: PreparedPhoto, down?: PreparedPhoto) => {
     setTexture({ state: "running" });
     try {
@@ -373,7 +374,7 @@ export default function HairPath() {
       const [r, l, d] = await Promise.all([uploadPhoto(right.blob), uploadPhoto(left.blob), down ? uploadPhoto(down.blob) : Promise.resolve(null)]);
       runCheck("frizz", [front, l.fileId, r.fileId], setFrizz);
       if (d) runCheck("density", [d.fileId], setDensity);
-      const { taskId } = await startTexture([front, r.fileId, l.fileId]);
+      const { taskId } = await startTexture([front, l.fileId, r.fileId]);
       const out = await pollTexture(taskId, abortRef.current.signal);
       if (out.kind === "success") return setTexture({ state: "done", texture: out.result });
       if (out.kind === "aborted") return;

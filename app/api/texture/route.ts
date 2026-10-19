@@ -6,7 +6,7 @@ import { mockTaskId } from "@/lib/server/mock";
 export const runtime = "nodejs";
 
 // Starts a YouCam Hair Type Detection task from the three texture-scan photos
-// (front, head turned right, head turned left).
+// (front, head turned to the user's left, then right).
 export async function POST(req: Request) {
   if (rateLimited(req)) return jsonError("rate_limited", "Too many attempts. Please wait a while and try again.", 429);
   try {
